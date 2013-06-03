@@ -176,9 +176,11 @@ iData = {
     "Uniform - 2pc": 19.95,
     "Handkerchief": 5.50,
     "Apron": 5.95,
-    "Belt - fabric  (leather = $9.95)": 4.95,
+    "Belt - fabric": 4.95,
+	"leather": 9.95,
     "Hat/ Cap - fabric": 7.95,
-    "Hat/ Cap - leather   (Western hat = $35.95)": 29.95
+    "Hat/ Cap - leather": 29.95,
+	"Western hat":35.95	
   },
   "Robe": {
     "Robe": 15.95,

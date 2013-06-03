@@ -236,9 +236,17 @@ button:active{
 }
 
 #main .items a{
+	position:relative;
+	font-weight: 600;
+	text-align: center;
+	font-size: 16px;
 	display: block;
-	border-radius: 5px;
-	padding: 1em;
+	float: left;
+	width: 10em;
+	height: 4em;
+	text-overflow: ellipsis;
+	overflow:hidden;
+	padding: 1.5em;
 	border: 1px solid #ddd;
 	background-color: #fafafa;
 	cursor: pointer;
@@ -246,4 +254,12 @@ button:active{
 
 #main .items a:hover{
 	background-color: #eee;
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
 }
