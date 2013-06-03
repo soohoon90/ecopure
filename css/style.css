@@ -6,8 +6,11 @@
 }
 
 html, body {
+  -ms-content-zooming: none;
   height: 100%;
 }
+
+@-ms-viewport { width: device-width; }
 
 body{
    background-image: url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/low_contrast_linen.png');
@@ -25,6 +28,7 @@ body{
 }
 
 body{
+ -ms-touch-action: none !important;
   font-family: "Open Sans", sans-serif;
   background-color: #333;
   font-size: 10px;
@@ -72,6 +76,7 @@ body{
 
 #main{
   overflow-y:scroll; 
+  -ms-overflow-style: -ms-autohiding-scrollbar;
   background-image: url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/whitey.png');
   position: absolute;
   height: 100%;
