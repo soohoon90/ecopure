@@ -1,33 +1,44 @@
 <html lang="en">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="user-scalable=no, initial-scale=1.0">
-  <script src="js/jquery.min.js"></script>
-  <script src="js/idata.js"></script>
-  <script src="js/app.js"></script>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600,800,300' rel='stylesheet' type='text/css'>
-  <link href="css/style.css" rel="stylesheet" TYPE="text/css" MEDIA="screen" >
-  <body>
-    <div id="appWrapper">
-      <div id="content">
-        
-		<div id="sidebar">
-			<h2>Items</h2>
-            <ul id="sidelist">
-            </ul>
-        </div>
-        
-		<div id="main">
-		  <h2>Details</h2>
-		  <div id="mainContent">
-		  </div>
-        </div>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1.0">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/idata.js"></script>
+	<script src="js/app.js"></script>
+	<link href='font/opensans.css' rel="stylesheet" type="text/css">
+	<link href="css/style.css" rel="stylesheet" type="text/css" media="screen" >
+</head>
+<body>
+	<div id="appWrapper">
+		<div id="content">
 		
-		<div id="debug">
-			<h2>Debug</h2>
-			<pre id="debugData"></pre>
+			<div id="sidebar">
+				<h2>Items</h2>
+				<ul id="sidelist">
+				</ul>
+			</div>
+		
+			<div id="main">
+				<h2>Itemizing</h2>
+				<div id="mainSide">
+					<h3>Categories</h3>
+					<div id="mainSideItems"></div>
+				</div>
+				<div id="mainContent">
+					<h3>Items</h3>
+					<div id="mainContentItems">
+						<div class="hero">
+							please select a category
+						</div>
+					</div>
+				</div>
+			</div>		
 		</div>
-		
-      </div>
-    </div>
-  </body>
+	</div>
+	
+	<div id="debug">
+		<h2>Debug</h2>
+		<pre id="debugData"></pre>
+	</div>
+</body>
 </html>

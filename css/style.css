@@ -19,13 +19,37 @@ body{
 #appWrapper{
   overflow: hidden;
   position: absolute;
-  top: 5%;
-  left: 5%;
-  right: 5%;
-  bottom: 5%;
+  top: 5%; left: 5%; right: 5%; bottom: 5%;
   border-radius: 15px;
-  box-shadow: 0 0 15px rgba(0,0,0,.5);
+  box-shadow: 0 0 15px rgba(0,0,0,.5); 
+  /*top: 0; bottom :0; left: 0; right: 450px;*/
 }
+
+#debug{
+  background-color: #3D6172;
+  position:absolute;
+  height: 100%;
+  width: 450px;
+  right: 0;
+  overflow: auto;
+  display: none;
+}
+
+#debug h2{
+  text-shadow: 1px 1px 3px rgba(0,0,0,.5);
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 0.6em 0.8em;
+  //border-bottom: 1px solid rgba(255,255,255,0.5);
+  //background-color: #1B4B2D;
+  background: linear-gradient(to bottom, #1B3D50 0%, #173145 100%);
+  color: white;
+}
+
+#debugData{
+  padding: 10px;
+}
+
 
 body{
  -ms-touch-action: none !important;
@@ -64,46 +88,6 @@ body{
   //background-color: #1B4B2D;
   background: linear-gradient(to bottom, #1B3D50 0%, #173145 100%);
   color: white;
-}
-
-#rooms{
-  display: none;
-    top: 5%;
-}
-
-#items{
-  display: none;
-    top: 5%;
-}
-
-#main{
-  overflow-y: auto; 
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  background-image: url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/whitey.png');
-  position: absolute;
-  height: 100%;
-  left:250px;
-  right:0;
-  top: 0%;
-  background-color: #ddd;
-  color: black;
-}
-
-#main h2{
-  text-shadow: 1px 1px 3px rgba(0,0,0,.5);
-  text-transform: uppercase;
-  font-weight: 700;
-  padding: 0.6em 0.8em;
-  background: linear-gradient(to bottom, rgba(200,200,200,1) 0%,rgba(166,166,166,1) 100%);
-  color: white;
-}
-
-#debug{
-  position:absolute;
-  height: 30%;
-  width: 100%;
-  bottom: 0 !important;
-  display: none;
 }
 
 #sidebar ul{
@@ -230,11 +214,97 @@ button:active{
   padding: 20px;
 }
 
-#debugData{
-  padding: 10px;
+#main{  
+  background-image: url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/whitey.png');
+  position: absolute;
+  height: 100%;
+  left:250px;
+  right:0;
+  top: 0%;
 }
 
-#main .items{
+#main h2{
+  text-shadow: 1px 1px 3px rgba(0,0,0,.5);
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 0.6em 0.8em;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(200,200,200,1) 0%,rgba(166,166,166,1) 100%);
+  color: white;
+}
+
+#main h3{
+  text-shadow: 1px 1px 3px rgba(0,0,0,.5);
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 0.6em 0.8em;
+  background: linear-gradient(to bottom, rgba(200,200,200,1) 0%,rgba(166,166,166,1) 100%);
+  color: white;
+  // text-align: center;
+}
+
+#mainSide{
+  overflow-y: auto; 
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  position: absolute;
+  left: 0;
+  top: 40px;
+  height: 160px;
+  right: 0;
+  background-color: rgb(96,96,96);
+}
+
+#mainSide h3{
+  background: linear-gradient(to bottom, rgba(130,130,130,1) 0%,rgba(96,96,96,1) 100%);
+}
+
+#mainSideItems{
+  padding: 0 2em;
+}
+
+#mainSideItems a{
+  position:relative;
+  font-weight: 600;
+  text-align: center;
+  font-size: 14px;
+  display: table;
+  float: left;
+  margin: 0 1em 1em 0;
+  text-overflow: ellipsis;
+  overflow:hidden;
+  padding: 1em;
+  //border: 1px solid #ddd;
+  background-color: #fafafa;
+  cursor: pointer;
+  border-radius: 1em;
+  color: #333;
+  box-shadow: 0 0 5px rgba(0,0,0,.5);
+
+/*  text-align: center;
+  cursor: pointer;
+  color: black;
+  display: block;
+  margin: 5px;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #eee;*/
+}
+
+#mainSideItems a.selected{
+  color: orange;
+}
+
+#mainContent{
+  overflow-y: auto; 
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 200px;
+  bottom :0;
+}
+
+#mainContentItems .items{
   border-radius: 10px;
   background-color: #eee;
   color: #333;
@@ -242,29 +312,30 @@ button:active{
   padding: 20px;
 }
 
-#main .items a{
+#mainContentItems .items a{
 	position:relative;
 	font-weight: 600;
 	text-align: center;
 	font-size: 16px;
 	display: table;
 	float: left;
-	margin: 0 1em 1em 0;
+	margin: 0 0.5em 0.5em 0;
 	width: 10em;
-	height: 4em;
+	height: 3em;
 	text-overflow: ellipsis;
 	overflow:hidden;
 	padding: 1.5em;
 	border: 1px solid #ddd;
 	background-color: #fafafa;
 	cursor: pointer;
+  border-radius: 1em;
 }
 
-#main .items a:hover{
+#mainContentItems .items a:hover{
 	background-color: #eee;
 }
 
-#main .items a p {
+#mainContentItems .items a p {
   display: table-cell; 
   vertical-align: middle; 
   text-align: center; 
