@@ -25,10 +25,10 @@ body{
 #appWrapper{
   overflow: hidden;
   position: absolute;
-  top: 2%; left: 2%; right: 2%; bottom: 2%;
-  border-radius: 15px;
-  box-shadow: 0 0 15px rgba(0,0,0,.5); 
-  /*top: 0; bottom :0; left: 0; right: 450px;*/
+  /*top: 2%; left: 2%; right: 2%; bottom: 2%;*/
+  /*border-radius: 15px;*/
+  /*box-shadow: 0 0 15px rgba(0,0,0,.5); */
+  top: 0; bottom :0; left: 0; right: 0;
 }
 
 #debug{
@@ -74,15 +74,49 @@ body{
   overflow-x: hidden;
 }
 
-#sidebar{
-  overflow-y: auto; 
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  position: absolute;
-  width: 250px;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  background-color: #224767;
+@media screen and (min-width: 800px) {
+  #sidebar{
+    overflow-y: auto; 
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    position: absolute;
+    width: 250px;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #224767;
+  }
+
+  #main{  
+    background-image: url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/whitey.png');
+    position: absolute;
+    height: 100%;
+    left:250px;
+    right:0;
+    top: 0%;
+  }
+}
+
+@media screen and (max-width: 799px) {
+  #sidebar{
+    overflow-y: auto; 
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    position: absolute;
+    height: 20%;
+    left: 0;
+    top: 0;
+    right: 0;
+    background-color: #224767;
+  }
+
+  #main{  
+    background-image: url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/whitey.png');
+    position: absolute;
+    height: 100%;
+    left: 0;
+    right:0;
+    top: 20%;
+    bottom: 0;
+  }
 }
 
 #sidebar h2{
@@ -130,7 +164,6 @@ body{
   cursor: pointer;
   background-color: #eee;
 }
-
 
 #claimList{
   list-style: none;
@@ -220,15 +253,6 @@ button:active{
   padding: 20px;
 }
 
-#main{  
-  background-image: url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/whitey.png');
-  position: absolute;
-  height: 100%;
-  left:250px;
-  right:0;
-  top: 0%;
-}
-
 #main h2{
   text-shadow: 1px 1px 3px rgba(0,0,0,.5);
   text-transform: uppercase;
@@ -250,6 +274,7 @@ button:active{
 }
 
 #mainSide{
+  overflow-x: hidden;
   overflow-y: auto; 
   -ms-overflow-style: -ms-autohiding-scrollbar;
   position: absolute;
@@ -301,6 +326,7 @@ button:active{
 }
 
 #mainContent{
+  overflow-x: hidden;
   overflow-y: auto; 
   -ms-overflow-style: -ms-autohiding-scrollbar;
   position: absolute;
