@@ -12,7 +12,7 @@ $(function(){
 	$("<h3>").html(c).appendTo(u);
 	for (i in items){
 		var price = iData[c][i];
-		$("<a>").html(i).appendTo(u);
+		$("<a>").html("<p>"+i+"</p>").appendTo(u);
 	}
   }
   $("#debug").html(JSON.stringify(iData, "", 2));

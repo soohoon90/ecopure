@@ -45,6 +45,8 @@ body{
 }
 
 #sidebar{
+  overflow-y: auto; 
+  -ms-overflow-style: -ms-autohiding-scrollbar;
   position: absolute;
   width: 250px;
   left: 0;
@@ -75,7 +77,7 @@ body{
 }
 
 #main{
-  overflow-y:scroll; 
+  overflow-y: auto; 
   -ms-overflow-style: -ms-autohiding-scrollbar;
   background-image: url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/whitey.png');
   position: absolute;
@@ -245,8 +247,9 @@ button:active{
 	font-weight: 600;
 	text-align: center;
 	font-size: 16px;
-	display: block;
+	display: table;
 	float: left;
+	margin: 0 1em 1em 0;
 	width: 10em;
 	height: 4em;
 	text-overflow: ellipsis;
@@ -259,6 +262,12 @@ button:active{
 
 #main .items a:hover{
 	background-color: #eee;
+}
+
+#main .items a p {
+  display: table-cell; 
+  vertical-align: middle; 
+  text-align: center; 
 }
 
 .clearfix:after {
