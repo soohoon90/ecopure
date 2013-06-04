@@ -25,7 +25,7 @@ body{
 #appWrapper{
   overflow: hidden;
   position: absolute;
-  top: 5%; left: 5%; right: 5%; bottom: 5%;
+  top: 2%; left: 2%; right: 2%; bottom: 2%;
   border-radius: 15px;
   box-shadow: 0 0 15px rgba(0,0,0,.5); 
   /*top: 0; bottom :0; left: 0; right: 450px;*/
@@ -273,12 +273,12 @@ button:active{
   font-weight: 600;
   text-align: center;
   font-size: 14px;
-  display: table;
+  display: block;
   float: left;
-  margin: 0 1em 1em 0;
+  margin: 0 0.5em 0.5em 0;
   text-overflow: ellipsis;
   overflow:hidden;
-  padding: 1em;
+  padding: 0.5em 1em;
   //border: 1px solid #ddd;
   background-color: #fafafa;
   cursor: pointer;
@@ -330,7 +330,7 @@ button:active{
 	height: 3em;
 	text-overflow: ellipsis;
 	overflow:hidden;
-	padding: 1.5em;
+	padding: 1em;
 	border: 1px solid #ddd;
 	background-color: #fafafa;
 	cursor: pointer;
