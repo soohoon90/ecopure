@@ -368,17 +368,18 @@ button:active{
 #mainContentItems .items a{
 	position:relative;
 	font-weight: 600;
-	text-align: center;
+	//text-align: center;
 	font-size: 16px;
 	display: inline-table;
 	margin: 0 0.5em 0.5em 0;
-	width: 23%;
-	overflow:hidden;
+	width: 10em;
+	height: 4em;
+	//overflow:hidden;
 	padding: 0.5em;
 	background-color: #fafafa;
 	cursor: pointer;
-  border-radius: 1em;
-  box-sizing:border-box;
+	border-radius: 1em;
+	vertical-align: middle;
 }
 
 #mainContentItems .items a:hover{
