@@ -1,3 +1,5 @@
+currentItems = [];
+
 function showCategories(dest){
 	for (c in iData){
 		$("<a>").html(c).appendTo(dest);
@@ -21,12 +23,63 @@ function showItemsForCategory(c, dest){
 	dest.html(u);
 }
 
+function getCategorizedCurrentItems(){
+
+	var c = {};
+
+	for (var i=0;i<currentItems.length;i++){
+		var item = currentItems[i];
+		if (!c[item.c]) c[item.c] = {};
+		if (!c[item.c][item.i]) c[item.c][item.i] = 0;
+		c[item.c][item.i] += 1;
+	}
+
+	console.log(c);
+	return c;
+}
+
+function updateItemsList(){
+
+	$("#lastItem").html("");
+	$("#sidelist").html("");
+
+	if (currentItems.length > 0){
+		var lastItem = currentItems[currentItems.length-1];
+		// $("#lastItem").html(lastItem.c + " - " + lastItem.i + " added.")	;
+
+		var u = $("<li>").appendTo($("#sidelist"));
+		var o = getCategorizedCurrentItems();
+
+		for (c in o){
+			$("<h3>").html(c).appendTo(u);
+			var uu = $("<ul>").appendTo(u);
+			for (i in o[c]){
+
+				var num = o[c][i];
+				$("<li>").html(num+"x "+i).appendTo(uu);
+			}
+		}
+
+		$("#deleteLast").html("delete lastly added item <br/>("+lastItem.c + " - " + lastItem.i+")").show();
+	}else{
+		$("#lastItem").html("no items added");
+		$("#deleteLast").hide();
+	}
+ 	}
+
 $(function(){
 
+	$("#deleteLast").click(function(){
+		currentItems.pop();
+		updateItemsList();
+	});
+
   $(document).on("click","#mainContentItems .items a", function(){
-	var t = $(this).html();
-	var tt = $("#mainSideItems a.selected").html();
-	$("<li>").html(t+" - "+tt).appendTo($("#sidelist"));
+	var t = $(this).text();
+	var tt = $("#mainSideItems a.selected").text();
+	currentItems.push({c:tt, i:t});
+	updateItemsList();
+	// $("<li>").html("<strong>"+tt+"</strong>"+t).appendTo($("#sidelist"));
   });
 
   $(document).on("click","#mainSideItems a", function(){
@@ -44,4 +97,8 @@ $(function(){
 	// }
 
   $("#debugData").html(JSON.stringify(iData, "", 2));
+
+  showItemsForCategory("Pants",$("#mainContentItems"));
+  $("#mainSideItems a:first-child").addClass("selected");
+  updateItemsList();
 });

@@ -86,7 +86,8 @@ body{
     background-color: #224767;
   }
 
-  #main{  
+  #main{
+    background-color: #eee;
     background-image: url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/whitey.png');
     position: absolute;
     height: 100%;
@@ -108,7 +109,8 @@ body{
     background-color: #224767;
   }
 
-  #main{  
+  #main{
+    background-color: #eee;  
     background-image: url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/whitey.png');
     position: absolute;
     height: 100%;
@@ -163,6 +165,25 @@ body{
 #sidebar ul li:hover{
   cursor: pointer;
   background-color: #eee;
+}
+
+#deleteLast{
+  text-align: center;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+  color: white;
+  background-color: #e33;
+  cursor: pointer;
+}
+
+#lastItem{
+  font-size: 14px;
+  //border-radius: 10px;
+  //margin: 10px;
+  //padding: 10px;
+  //color: #333;
+  //background-color: #eee;
 }
 
 #claimList{
@@ -337,11 +358,11 @@ button:active{
 }
 
 #mainContentItems .items{
-  border-radius: 10px;
+  /*border-radius: 10px;
   background-color: #eee;
-  color: #333;
-  margin: 25px;
+  margin: 25px; */
   padding: 20px;
+  color: #333;
 }
 
 #mainContentItems .items a{
@@ -349,18 +370,15 @@ button:active{
 	font-weight: 600;
 	text-align: center;
 	font-size: 16px;
-	display: table;
-	float: left;
+	display: inline-table;
 	margin: 0 0.5em 0.5em 0;
-	width: 10em;
-	height: 3em;
-	text-overflow: ellipsis;
+	width: 23%;
 	overflow:hidden;
-	padding: 1em;
-	border: 1px solid #ddd;
+	padding: 0.5em;
 	background-color: #fafafa;
 	cursor: pointer;
   border-radius: 1em;
+  box-sizing:border-box;
 }
 
 #mainContentItems .items a:hover{

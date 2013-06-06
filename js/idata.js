@@ -2,12 +2,12 @@ var iData;
 
 iData = {
   "Pants": {
-    "Pants": 10.95,
+    "Regular": 10.95,
     "Snow Pants": 24.95,
-    "Pants w/ beads/ fancy trimmings": 14.95,
+    "w/ beads/ fancy trimmings": 14.95,
     "Silk/ linen Pants": 13.95,
     "Silk/ linen lined Pants": 13.95,
-    "Pannts w/ leather/ plastic trimmings": 14.95,
+    "w/ leather/ plastic trimmings": 14.95,
     "handpress Pants": 16.00,
     "Shorts": 9.95,
     "Shorts - Silk/ linen": 10.50,
@@ -15,7 +15,7 @@ iData = {
     "Shorts - leather": 37.50
   },
   "Shirts": {
-    "Shirts (Wetclean)": 9.95,
+    "Regular (Wetclean)": 9.95,
     "Handpress": 9.95,
     "Golf/ Polo shirt": 4.95,
     "Sweatshirt": 6.95,
@@ -57,7 +57,7 @@ iData = {
     "Leather/ Shearing - full length": 74.95
   },
   "Skirt": {
-    "Skirt": 10.95,
+    "Regular": 10.95,
     "Sari": 45.95,
     "Indian skirt": 21.95,
     "Long": 11.50,
@@ -73,7 +73,7 @@ iData = {
     "Leather/ Suede": 44.95
   },
   "Blouse": {
-    "Blouse": 9.95,
+    "Regular": 9.95,
     "Slip blouse": 6.95,
     "W/ ruffles": 13.95,
     "Silk/ linen": 12.95,
@@ -88,7 +88,7 @@ iData = {
     "Bodysuit": 10.50
   },
   "Jacket": {
-    "Jacket": 16.95,
+    "Regular": 16.95,
     "Linen/ Silk": 19.95,
     "¾ Length": 24.95,
     "Polyurethane": 34.95,
@@ -105,7 +105,7 @@ iData = {
     "Leather/ Suede (3/4 length)": 69.95
   },
   "Dress": {
-    "Dress": 22.95,
+    "Regular": 22.95,
     "Short pleated": 26.95,
     "Lined plain": 23.95,
     "Long plain": 23.95,
@@ -123,7 +123,7 @@ iData = {
     "Leather/ Suede": 52.95
   },
   "Sweater": {
-    "Sweater": 10.95,
+    "Regular": 10.95,
     "Cashmere/ angora": 14.95,
     "Dress": 24.95,
     "Coat": 26.95,
@@ -141,14 +141,14 @@ iData = {
     "knit blocked": 20.95
   },
   "Tie": {
-    "Tie": 12.50,
+    "Regular": 12.50,
     "Leather": 24.95,
     "Bow tie": 12.50,
     "Cummerbund": 9.95,
     "Suspenders": 9.95
   },
   "Vest": {
-    "Vest": 10.25,
+    "Regular": 10.25,
     "Heavy": 12.75,
     "Down": 24.95,
     "Fancy": 12.95,
@@ -158,21 +158,21 @@ iData = {
     "Leather/ Suede": 34.95
   },
   "Scarf": {
-    "Scarf": 9.75,
+    "Regular": 9.75,
     "Silk/sequin": 11.95,
     "Heavy": 10.75,
     "Camisole": 19.95
   },
   "Cape": {
-    "Cape": 22.95,
+    "Regular": 22.95,
     "Cashmere": 24.95
   },
   "Shaw": {
-    "Shaw": 19.95,
+    "Regular": 19.95,
     "Silk/ velvet": 21.95
   },
   "Pashmina": {
-    "Pashmina": 17.95,
+    "Regular": 17.95,
     "Uniform - 2pc": 19.95,
     "Handkerchief": 5.50,
     "Apron": 5.95,
@@ -183,16 +183,16 @@ iData = {
 	"Western hat":35.95	
   },
   "Robe": {
-    "Robe": 15.95,
+    "Regular": 15.95,
     "Silk/ satin/ lace/ velvet/ valour": 26.95,
     "Sash": 11.75
   },
   "Gloves": {
-    "fabric": 6.95,
+    "Fabric": 6.95,
     "Leather": 27.50
   },
   "Wash and fold": {
-    "pound": 6.00
+    "1 pound": 6.00
   },
   "Drape": {
     "lined/ panel": 16.95,
@@ -244,7 +244,7 @@ iData = {
     "Large": 17.95,
     "Extra long": 19.95
   },
-    "Other": {
+  "Other": {
     "Wallet": 12.95,
     "Backpack/ bags": 9.95,
     "Mat": 9.95,
