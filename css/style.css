@@ -177,87 +177,18 @@ body{
   cursor: pointer;
 }
 
+#deleteLast strong{
+ text-transform: uppercase;
+}
+
 #lastItem{
   font-size: 14px;
+  text-align: center;
   //border-radius: 10px;
   //margin: 10px;
-  //padding: 10px;
+  padding: 10px;
   //color: #333;
   //background-color: #eee;
-}
-
-#claimList{
-  list-style: none;
-  display: block;
-  // border-radius: 5px;
-  // border: 1px solid black;
-  //background-color: white;
-  margin: 10px;
-  color: #999;
-}
-
-#claimList li{
-  padding: 1em;
-  background-color: white;
-  border-bottom: 1px solid rgba(200,200,200,0.7);
-}
-
-#claimList li:first-child{
-  border-radius: 5px 5px 0 0;
-}
-
-#claimList li:last-child{
-  border: none;
-  border-radius: 0 0 5px 5px;
-}
-
-#claimList li:hover{
-  cursor: pointer;
-  background-color: #eee;
-}
-
-#claimList li strong{
-  color: #333;
-  font-weight: 700;
-  font-size: 1.4em;
-  display: block;
-}
-
-#claimList li span{
-  color: #bbb;
-  float: right;
-  display: block;
-}
-
-#claimControl{
-  display: block;
-  border-radius: 5px;
-  margin: 10px;
-  color: #999;
-  text-align: center;
-}
-
-#claimControl button{
-  width: 100%;
-}
-
-button{
-  background-color: #5BA149;
-  font-family: "Open Sans", sans-serif;
-  font-size: 16px;
-  color: white;
-  padding: 0.7em 2em;
-  border-radius: 0.3em;
-  box-shadow: 1px 1px 2px rgba(0,0,0,.3);
-  cursor: pointer;
-}
-
-button:hover{
-  background-color: #36773D;
-}
-
-button:active{
-  box-shadow: none;
 }
 
 #inputClaimDetail input{

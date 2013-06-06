@@ -60,7 +60,7 @@ function updateItemsList(){
 			}
 		}
 
-		$("#deleteLast").html("delete lastly added item <br/>("+lastItem.c + " - " + lastItem.i+")").show();
+		$("#deleteLast").html("<strong>delete lastly added item</strong> <br/>("+lastItem.c + " - " + lastItem.i+")").show();
 	}else{
 		$("#lastItem").html("no items added");
 		$("#deleteLast").hide();
