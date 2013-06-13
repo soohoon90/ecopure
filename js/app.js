@@ -120,16 +120,17 @@ function showModalForPrompt(c,i){
 		.html("Adding how many " + i + " item (" + c + ")?")
 		.appendTo(m);
 
-	var dainput = $("<input>")
-		.attr("type","number")
+	var dainput = $("<div>")
+		.addClass("promptInput")
 		.data("c",c)
 		.data("i",i)
+		.html("")
 		.keypress(function(e){
 			var key=e.keyCode || e.which;
 			if (key==13){
 				var category = $(this).data("c");
 				var item = $(this).data("i");
-				var num = $(this).val();
+				var num = $(this).html();
 				if (num){
 					setCategorizedItemCount(category, item, num);
 					updateItemsListFromCategorizedItems();
@@ -146,9 +147,9 @@ function showModalForPrompt(c,i){
 		$("<div>")
 			.addClass("numButton")
 			.click(function(){
-				var d = dainput.val();
+				var d = dainput.html();
 				var dd = $(this).html();
-				dainput.val(d+dd);
+				dainput.html(d+dd);
 			})
 			.html(j)
 			.appendTo(m);
@@ -161,7 +162,7 @@ function showModalForPrompt(c,i){
 	$("<div>")
 		.addClass("numButton")
 		.click(function(){
-			dainput.val("");
+			dainput.html("");
 		})
 		.html("CLEAR")
 		.appendTo(m);
@@ -171,10 +172,10 @@ function showModalForPrompt(c,i){
 	$("<div>")
 		.addClass("doneButton")
 		.click(function(){ 
-			var inputElement = $("#modalContent input");
+			var inputElement = $("#modalContent .promptInput");
 			var category = inputElement.data("c");
 			var item = inputElement.data("i");
-			var num = inputElement.val();
+			var num = inputElement.html();
 			if (num){
 				setCategorizedItemCount(category, item, num);
 				updateItemsListFromCategorizedItems();
@@ -191,7 +192,7 @@ function showModalForPrompt(c,i){
 		.appendTo(m);
 
 	$("#modal").show();
-	$("#modalContent input").focus();
+	//$("#modalContent input").focus();
 
 }
 
@@ -202,7 +203,7 @@ function promptForNumberOfItems(c,i){
 		var num = prompt("How many " + i + " (" + c + ")?", "");
 	}else{
 		showModalForPrompt(c,i);
-		$("#modalContent input").focus();
+	//	$("#modalContent input").focus();
 	}
 
 	return num;
