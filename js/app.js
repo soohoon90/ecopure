@@ -121,6 +121,7 @@ function showModalForPrompt(c,i){
 		.appendTo(m);
 
 	var dainput = $("<input>")
+		.attr("type","number")
 		.data("c",c)
 		.data("i",i)
 		.keypress(function(e){
