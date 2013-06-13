@@ -130,8 +130,10 @@ function showModalForPrompt(c,i){
 				var category = $(this).data("c");
 				var item = $(this).data("i");
 				var num = $(this).val();
-				setCategorizedItemCount(category, item, num);
-				updateItemsListFromCategorizedItems();
+				if (num){
+					setCategorizedItemCount(category, item, num);
+					updateItemsListFromCategorizedItems();
+				}
 				$("#modal").hide();
 			}
 		})
@@ -173,8 +175,10 @@ function showModalForPrompt(c,i){
 			var category = inputElement.data("c");
 			var item = inputElement.data("i");
 			var num = inputElement.val();
-			setCategorizedItemCount(category, item, num);
-			updateItemsListFromCategorizedItems();
+			if (num){
+				setCategorizedItemCount(category, item, num);
+				updateItemsListFromCategorizedItems();
+			}
 			$("#modal").hide();
 		})
 		.html("add")
@@ -187,7 +191,7 @@ function showModalForPrompt(c,i){
 		.appendTo(m);
 
 	$("#modal").show();
-	dainput.focus();
+	$("#modalContent input").focus();
 
 }
 
@@ -198,6 +202,7 @@ function promptForNumberOfItems(c,i){
 		var num = prompt("How many " + i + " (" + c + ")?", "");
 	}else{
 		showModalForPrompt(c,i);
+		$("#modalContent input").focus();
 	}
 
 	return num;
