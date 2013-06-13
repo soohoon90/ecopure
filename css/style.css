@@ -22,6 +22,77 @@ body{
    background-image: url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/low_contrast_linen.png');
 }
 
+#modal{
+  background-color: rgba(0,0,0,.5);
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 10;
+}
+
+#modalContent{
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(0,0,0,.5);
+  position: absolute;
+  top: 20%; left: 30%; right: 30%; bottom: 25%;
+  padding: 20px;
+  color: black;
+  text-align: center;
+}
+
+#modalContent input{
+  display: block;
+  font-size: 16px;
+  width: 20em;
+  padding: 1em;
+  border: 1px solid #ddd;
+  margin: 10px auto;
+}
+
+#modalContent .cancelButton{
+  width: 10em;
+  display: inline-block;
+  text-align: center;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+  font-size: 13px;
+  text-shadow: 0 1px 1px rgba(0,0,0,.5);
+  color: white;
+  background-color: #933;
+  cursor: pointer;
+}
+
+#modalContent .doneButton{
+  width: 10em;
+  display: inline-block;
+  text-align: center;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+  font-size: 13px;
+  text-shadow: 0 1px 1px rgba(0,0,0,.5);
+  color: white;
+  background-color: #393;
+  cursor: pointer;
+}
+
+#modalContent .numButton{
+  width: 3em;
+  height: 1.5em;
+  display: inline-block;
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin: 5px;
+  padding: 10px;
+  font-size: 20px;
+  color: #333;
+  background-color: white;
+  cursor: pointer;
+}
+
+
 #appWrapper{
   overflow: hidden;
   position: absolute;

@@ -102,13 +102,6 @@ function updateItemsListFromCurrentItems(){
 	}
 }
 
-function showModalForSelectedItem(){
-
-	var selectedItem = $("#sidelist .selected").data("item");
-
-}
-
-
 function saveToSpreadsheet(){
 	saveAs(
 			  new Blob(
@@ -117,6 +110,96 @@ function saveToSpreadsheet(){
 			)
 			, "exported.txt"
 		);
+}
+
+function showModalForPrompt(c,i){
+
+	var m = $("#modalContent").html("");
+
+	$("<h3>")
+		.html("Adding how many " + i + " item (" + c + ")?")
+		.appendTo(m);
+
+	var dainput = $("<input>")
+		.data("c",c)
+		.data("i",i)
+		.keypress(function(e){
+			var key=e.keyCode || e.which;
+			if (key==13){
+				var category = $(this).data("c");
+				var item = $(this).data("i");
+				var num = $(this).val();
+				setCategorizedItemCount(category, item, num);
+				updateItemsListFromCategorizedItems();
+				$("#modal").hide();
+			}
+		})
+		.appendTo(m);
+
+	for (var i=1; i <= 10; i++){
+		var j;
+		(i == 10) ? j = 0 : j = i;
+
+		$("<div>")
+			.addClass("numButton")
+			.click(function(){
+				var d = dainput.val();
+				var dd = $(this).html();
+				dainput.val(d+dd);
+			})
+			.html(j)
+			.appendTo(m);
+
+		if (i % 3 == 0){
+			$("<br>").appendTo(m);
+		}
+	}
+
+	$("<div>")
+		.addClass("numButton")
+		.click(function(){
+			dainput.val("");
+		})
+		.html("CLEAR")
+		.appendTo(m);
+
+	$("<br>").appendTo(m);
+
+	$("<div>")
+		.addClass("doneButton")
+		.click(function(){ 
+			var inputElement = $("#modalContent input");
+			var category = inputElement.data("c");
+			var item = inputElement.data("i");
+			var num = inputElement.val();
+			setCategorizedItemCount(category, item, num);
+			updateItemsListFromCategorizedItems();
+			$("#modal").hide();
+		})
+		.html("add")
+		.appendTo(m);
+
+	$("<div>")
+		.addClass("cancelButton")
+		.click(function(){ $("#modal").hide(); })
+		.html("cancel")
+		.appendTo(m);
+
+	$("#modal").show();
+	dainput.focus();
+
+}
+
+
+function promptForNumberOfItems(c,i){
+
+	if (false) {
+		var num = prompt("How many " + i + " (" + c + ")?", "");
+	}else{
+		showModalForPrompt(c,i);
+	}
+
+	return num;
 }
 
 
@@ -134,9 +217,11 @@ $(function(){
 		var category = $("#mainSideItems a.selected").text();
 
 		// get new number
-		var num = prompt("How many " + item + " of " + category + "?", "");
-		setCategorizedItemCount(category, item, num);
-		updateItemsListFromCategorizedItems();
+		var num = promptForNumberOfItems(category, item);
+		if (num){
+			setCategorizedItemCount(category, item, num);
+			updateItemsListFromCategorizedItems();
+		}
 
 		//currentItems.push({c:tt, i:t});
 		//updateItemsList();
@@ -163,6 +248,7 @@ $(function(){
 	showItemsForCategory("Pants",$("#mainContentItems"));
 	$("#mainSideItems a:first-child").addClass("selected");
 	updateItemsListFromCategorizedItems();
+	$("#modal").hide();
 });
 
 }(self));
