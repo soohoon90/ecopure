@@ -28,7 +28,8 @@ body{
   /*top: 2%; left: 2%; right: 2%; bottom: 2%;*/
   /*border-radius: 15px;*/
   /*box-shadow: 0 0 15px rgba(0,0,0,.5); */
-  top: 0; bottom :0; left: 0; right: 0;
+  width: 1366px;
+  height: 786px;
 }
 
 #debug{
@@ -179,6 +180,18 @@ body{
 
 #deleteLast strong{
  text-transform: uppercase;
+}
+
+#exportData{
+  text-align: center;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+  font-size: 13px;
+  text-shadow: 0 1px 1px rgba(0,0,0,.5);
+  color: white;
+  background-color: #393;
+  cursor: pointer;
 }
 
 #lastItem{

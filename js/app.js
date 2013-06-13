@@ -1,20 +1,24 @@
-currentItems = [];
+(function(view) {
+"use strict";
+
+var currentItems = [];
+var categorizedItems = {};
 
 function showCategories(dest){
-	for (c in iData){
+	for (var c in iData){
 		$("<a>").html(c).appendTo(dest);
 		//var items = iData[c];
 	}
 };
 
 function showItemsForCategory(c, dest){
-	items = iData[c];
+	var items = iData[c];
 
 	// create div
 	var u = $("<div>").attr("class", "items").addClass("clearfix");
 	
 	// populate div
-	for (i in items){
+	for (var i in items){
 		var price = iData[c][i];
 		$("<a>").html("<p>"+i+"</p>").appendTo(u);
 	}
@@ -38,7 +42,38 @@ function getCategorizedCurrentItems(){
 	return c;
 }
 
-function updateItemsList(){
+function setCategorizedItemCount( c, i, n ) {
+
+	if (!categorizedItems[c]) categorizedItems[c] = {};
+	categorizedItems[c][i] = n;
+
+}
+
+function updateItemsListFromCategorizedItems(){
+	$("#lastItem").html("");
+	$("#sidelist").html("");
+	$("#deleteLast").hide();
+
+	var u = $("<li>").appendTo($("#sidelist"));
+	var o = categorizedItems;
+
+	for (var c in o){
+		$("<h3>").html(c).appendTo(u);
+		var uu = $("<ul>").appendTo(u);
+		for (var i in o[c]){
+
+			var num = o[c][i];
+			$("<li>")
+				.data("item", i)
+				.data("count", num)
+				.data("category", c)
+				.html(num+"x "+i)
+				.appendTo(uu);
+		}
+	}
+}
+
+function updateItemsListFromCurrentItems(){
 
 	$("#lastItem").html("");
 	$("#sidelist").html("");
@@ -50,10 +85,10 @@ function updateItemsList(){
 		var u = $("<li>").appendTo($("#sidelist"));
 		var o = getCategorizedCurrentItems();
 
-		for (c in o){
+		for (var c in o){
 			$("<h3>").html(c).appendTo(u);
 			var uu = $("<ul>").appendTo(u);
-			for (i in o[c]){
+			for (var i in o[c]){
 
 				var num = o[c][i];
 				$("<li>").html(num+"x "+i).appendTo(uu);
@@ -65,40 +100,69 @@ function updateItemsList(){
 		$("#lastItem").html("no items added");
 		$("#deleteLast").hide();
 	}
- 	}
+}
+
+function showModalForSelectedItem(){
+
+	var selectedItem = $("#sidelist .selected").data("item");
+
+}
+
+
+function saveToSpreadsheet(){
+	saveAs(
+			  new Blob(
+				  [JSON.stringify(categorizedItems, "", 2)]
+				, {type: "text/plain;charset=" + document.characterSet}
+			)
+			, "exported.txt"
+		);
+}
+
 
 $(function(){
-
 	$("#deleteLast").click(function(){
 		currentItems.pop();
 		updateItemsList();
 	});
 
-  $(document).on("click","#mainContentItems .items a", function(){
-	var t = $(this).text();
-	var tt = $("#mainSideItems a.selected").text();
-	currentItems.push({c:tt, i:t});
-	updateItemsList();
-	// $("<li>").html("<strong>"+tt+"</strong>"+t).appendTo($("#sidelist"));
-  });
+	$("#exportData").click(saveToSpreadsheet);	
 
-  $(document).on("click","#mainSideItems a", function(){
-  	$("#mainSideItems a").removeClass("selected");
-  	$(this).addClass("selected");
-  	var t = $(this).html();
-  	showItemsForCategory(t,$("#mainContentItems"));
-  });
+	// Selecting item
+	$(document).on("click","#mainContentItems .items a", function(){
+		var item = $(this).text();
+		var category = $("#mainSideItems a.selected").text();
 
-  showCategories($("#mainSideItems"));
-	// var u = $("<div>").attr("class", "items").addClass("clearfix").appendTo(dest);
-	// for (i in items){
-	// 	var price = iData[c][i];
-	// 	$("<a>").html("<p>"+i+"</p>").appendTo(u);
-	// }
+		// get new number
+		var num = prompt("How many " + item + " of " + category + "?", "");
+		setCategorizedItemCount(category, item, num);
+		updateItemsListFromCategorizedItems();
 
-  $("#debugData").html(JSON.stringify(iData, "", 2));
+		//currentItems.push({c:tt, i:t});
+		//updateItemsList();
+		// $("<li>").html("<strong>"+tt+"</strong>"+t).appendTo($("#sidelist"));
+	});
 
-  showItemsForCategory("Pants",$("#mainContentItems"));
-  $("#mainSideItems a:first-child").addClass("selected");
-  updateItemsList();
+	// Selecting category
+	$(document).on("click","#mainSideItems a", function(){
+		$("#mainSideItems a").removeClass("selected");
+		$(this).addClass("selected");
+		var t = $(this).html();
+		showItemsForCategory(t,$("#mainContentItems"));
+	});
+
+	showCategories($("#mainSideItems"));
+		// var u = $("<div>").attr("class", "items").addClass("clearfix").appendTo(dest);
+		// for (i in items){
+		// 	var price = iData[c][i];
+		// 	$("<a>").html("<p>"+i+"</p>").appendTo(u);
+		// }
+
+	$("#debugData").html(JSON.stringify(iData, "", 2));
+
+	showItemsForCategory("Pants",$("#mainContentItems"));
+	$("#mainSideItems a:first-child").addClass("selected");
+	updateItemsListFromCategorizedItems();
 });
+
+}(self));
