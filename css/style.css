@@ -265,6 +265,18 @@ body{
   cursor: pointer;
 }
 
+#deleteData{
+  text-align: center;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+  font-size: 13px;
+  text-shadow: 0 1px 1px rgba(0,0,0,.5);
+  color: white;
+  background-color: #933;
+  cursor: pointer;
+}
+
 #lastItem{
   font-size: 14px;
   text-align: center;

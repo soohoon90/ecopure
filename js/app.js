@@ -50,6 +50,9 @@ function setCategorizedItemCount( c, i, n ) {
 }
 
 function updateItemsListFromCategorizedItems(){
+
+	localStorage.setItem("items", JSON.stringify(categorizedItems));
+
 	$("#lastItem").html("");
 	$("#sidelist").html("");
 	$("#deleteLast").hide();
@@ -211,12 +214,26 @@ function promptForNumberOfItems(c,i){
 
 
 $(function(){
+
+	// see if we have saved data
+	if(localStorage.getItem("items")){
+		categorizedItems = JSON.parse(localStorage.getItem("items"));
+	}
+
 	$("#deleteLast").click(function(){
 		currentItems.pop();
 		updateItemsList();
 	});
 
 	$("#exportData").click(saveToSpreadsheet);	
+
+	$("#deleteData").click(function(){
+		if (confirm("are you sure to start over?")){
+			categorizedItems = {};
+			localStorage.removeItem("items")
+			updateItemsListFromCategorizedItems();
+		}
+	});	
 
 	// Selecting item
 	$(document).on("click","#mainContentItems .items a", function(){
