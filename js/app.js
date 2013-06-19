@@ -160,7 +160,7 @@ function itemsToCSV(withPrice){
 		for (var c in claim.rooms[ri]){
 			for (var i in claim.rooms[ri][c]){
 				var row = ""
-				row += quoteString(ri+1);
+				row += quoteString(parseInt(ri)+1);
 				row += ',' + quoteString(c);
 				row += ','+ quoteString(i);
 				row += ','+ quoteString(claim.rooms[ri][c][i]);
@@ -418,6 +418,7 @@ function newClaim(){
 
 	saveClaimData();
 	updateRoomlist();
+	updateSidebar();
 	debug();
 }
 
