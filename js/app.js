@@ -454,13 +454,16 @@ $(function(){
 
 	loadItemData();
 	
-	if(localStorage.getItem("claimdata")){
+	if (localStorage.getItem("claimdata")){
 		claimdata = JSON.parse(localStorage.getItem("claimdata"));
 		if (typeof claimdata.selectedClaim == "undefined"){
 			newClaim();
 			saveClaimData();	
 		}
 		debug();
+	}else{
+		newClaim();
+		saveClaimData();	
 	}
 
 	updateRoomlist();
