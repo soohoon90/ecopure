@@ -1,67 +1,125 @@
 (function(view) {
 "use strict";
 
-var currentItems = [];
-var categorizedItems = {};
 
-function showCategories(dest){
+var claimdata = {};
+var itemData;
+var localItemData = {};
+var categorizedItems;
+
+function loadItemData(){
+	itemData = iData;
+	localItemData = JSON.parse(localStorage.getItem("localItemData"));
+
+	if (!localItemData){
+		localItemData = {};
+	}
+
+	for (var c in localItemData){
+		for (var i in localItemData[c]){
+			itemData[c][i] = localItemData[c][i];
+		}
+	}
+}
+
+function showCategories(){
 	for (var c in iData){
-		$("<a>").html(c).appendTo(dest);
+		$("<a>").html(c).appendTo($("#mainSideItems"));
 		//var items = iData[c];
 	}
 };
 
-function showItemsForCategory(c, dest){
-	var items = iData[c];
+function showItemsForCategory(c){
+	var items = itemData[c];
+	var items2 = localItemData[c];
 
 	// create div
 	var u = $("<div>").attr("class", "items").addClass("clearfix");
 	
 	// populate div
 	for (var i in items){
-		var price = iData[c][i];
+		var price = items[i];
 		$("<a>").html("<p>"+i+"</p>").appendTo(u);
 	}
 
+	$("<a>").addClass("describeButton").html("<p>Add a new Item</p>").appendTo(u);
+
 	// add div to dest
-	dest.html(u);
-}
-
-function getCategorizedCurrentItems(){
-
-	var c = {};
-
-	for (var i=0;i<currentItems.length;i++){
-		var item = currentItems[i];
-		if (!c[item.c]) c[item.c] = {};
-		if (!c[item.c][item.i]) c[item.c][item.i] = 0;
-		c[item.c][item.i] += 1;
-	}
-
-	console.log(c);
-	return c;
+	$("#mainContentItems").html(u);
 }
 
 function setCategorizedItemCount( c, i, n ) {
 
-	if (!categorizedItems[c]) categorizedItems[c] = {};
-	categorizedItems[c][i] = n;
+	var claim = claimdata.claims[claimdata.selectedClaim];
+	var r = claim.rooms[claimdata.selectedRoom];
+
+	if (!r[c]) r[c] = {};
+	if (!r[c][i]) r[c][i] = 0;
+	r[c][i] += parseInt(n);
+
+	saveClaimData();
+	updateRoomlist();
+}
+
+function updateClaimlist(){
+	var u = $("#claimList").html("");
+	console.log("updating claim list");
+	for (var i in claimdata.claims){
+		var c = claimdata.claims[i];
+		console.log(c);
+		$("<div>").html( Date.parse(c.date) ).appendTo(u);
+	}
+}
+
+function updateRoomlist(){
+	var u = $("#roomList").html("");
+
+	var claim = claimdata.claims[claimdata.selectedClaim];
+
+	for (var i in claim.rooms){
+		var r = claim.rooms[i];
+		console.log(r);
+		var totalItems = 0;
+		var differentItems = 0;
+		for (var c in r){
+			for (var n in r[c]){
+				differentItems++;
+				totalItems += r[c][n];
+			}
+		}
+		$("<div>")
+			.html("Room #" + (parseInt(i)+1) + " (" + differentItems + "/" + totalItems + ")" )
+			.data("r", i)
+			.appendTo(u);
+	}
 
 }
 
-function updateItemsListFromCategorizedItems(){
+function updateSidebar(){
+	var uu = $("#sidebarContent").html("");
 
-	localStorage.setItem("items", JSON.stringify(categorizedItems));
+	$("<h3>").html("Room #" + (parseInt(claimdata.selectedRoom)+1)).appendTo(uu);
+	
+	var claim = claimdata.claims[claimdata.selectedClaim];
+	var room = claim.rooms[claimdata.selectedRoom];
 
-	$("#lastItem").html("");
-	$("#sidelist").html("");
-	$("#deleteLast").hide();
+	var totalItems = 0;
+	var differentItems = 0;
+	for (var c in room){
+		for (var n in room[c]){
+			differentItems++;
+			totalItems += room[c][n];
+		}
+	}
 
-	var u = $("<li>").appendTo($("#sidelist"));
-	var o = categorizedItems;
+	$("<h3>").html(differentItems + " different items. " + totalItems + " items total.").appendTo(uu);
+
+	var u = $("<div>").appendTo(uu);
+	var o = room;
 
 	for (var c in o){
-		$("<h3>").html(c).appendTo(u);
+		console.log(c);
+		$("<strong>").html(c).appendTo(u);
 		var uu = $("<ul>").appendTo(u);
 		for (var i in o[c]){
 
@@ -70,58 +128,192 @@ function updateItemsListFromCategorizedItems(){
 				.data("item", i)
 				.data("count", num)
 				.data("category", c)
-				.html(num+"x "+i)
+				.html("<span>"+num+"x </span> "+i)
 				.appendTo(uu);
 		}
-	}
-}
-
-function updateItemsListFromCurrentItems(){
-
-	$("#lastItem").html("");
-	$("#sidelist").html("");
-
-	if (currentItems.length > 0){
-		var lastItem = currentItems[currentItems.length-1];
-		// $("#lastItem").html(lastItem.c + " - " + lastItem.i + " added.")	;
-
-		var u = $("<li>").appendTo($("#sidelist"));
-		var o = getCategorizedCurrentItems();
-
-		for (var c in o){
-			$("<h3>").html(c).appendTo(u);
-			var uu = $("<ul>").appendTo(u);
-			for (var i in o[c]){
-
-				var num = o[c][i];
-				$("<li>").html(num+"x "+i).appendTo(uu);
-			}
-		}
-
-		$("#deleteLast").html("<strong>delete lastly added item</strong> <br/>("+lastItem.c + " - " + lastItem.i+")").show();
-	}else{
-		$("#lastItem").html("no items added");
-		$("#deleteLast").hide();
 	}
 }
 
 function saveToSpreadsheet(){
 	saveAs(
 			  new Blob(
-				  [JSON.stringify(categorizedItems, "", 2)]
+				  [itemsToCSV(false)]
 				, {type: "text/plain;charset=" + document.characterSet}
 			)
-			, "exported.txt"
+			, "exported.csv"
 		);
 }
 
-function showModalForPrompt(c,i){
+function quoteString(string){
+	return '"'+string+'"';
+}
 
+function itemsToCSV(withPrice){
+	var rows = [];
+
+	rows.push(quoteString("room number") + "," + quoteString("category") + "," + quoteString("description") + "," + quoteString("quantity"))
+
+
+	var claim = claimdata.claims[claimdata.selectedClaim];
+
+	for (var ri in claim.rooms){
+		for (var c in claim.rooms[ri]){
+			for (var i in claim.rooms[ri][c]){
+				var row = ""
+				row += quoteString(ri+1);
+				row += ',' + quoteString(c);
+				row += ','+ quoteString(i);
+				row += ','+ quoteString(claim.rooms[ri][c][i]);
+				rows.push(row);
+			}
+		}
+	}
+
+	// for (var ri in claim.rooms){
+	// 	rows.push("room "+ ri+1);
+	// 	for (var c in claim.rooms[ri]){
+	// 		for (var i in claim.rooms[ri][c]){
+	// 			var row = quoteString(c);
+	// 			row += ','+ quoteString(i);
+	// 			row += ','+ quoteString(claim.rooms[ri][c][i]);
+	// 			rows.push(row);
+	// 		}
+	// 	}
+	// }
+
+	// for (var r in categorizedItems){
+	// 	for (var c in categorizedItems[r]){
+	// 		for (var i in categorizedItems[r][c]){
+	// 			var r = "";
+	// 			r += quoteString(r);
+	// 			r += ','+ quoteString(c);
+	// 			r += ','+ quoteString(i);
+	// 			r += ','+ quoteString(categorizedItems[r][c][i]);
+	// 			rows.push(r);
+	// 		}
+	// 	}
+	// }
+
+	return rows.join("\r\n");
+}
+
+function showModalForSwitchingClaim(){
+	var h = $("#modalHeader").html("");
 	var m = $("#modalContent").html("");
+	var f = $("#modalFooter").html("");
 
-	$("<h3>")
-		.html("Adding how many " + i + " item (" + c + ")?")
+	$("<h2>")
+		.html("Switch claim you are working on:")
+		.appendTo(h);
+
+	for (var i in claimdata.claims){
+		
+		var d = new Date(claimdata.claims[i].date);
+		var s = "";
+		s += "Claim " + (parseInt(i)+1);
+		s += " with " + claimdata.claims[i].rooms.length + " rooms <br/>";
+		s += "created at " + d.toUTCString();
+		
+
+		$("<div>")
+			.addClass("claimButton")
+			.html(s)
+			.data("i", i)
+			.click(function(){
+				claimdata.selectedClaim = $(this).data("i");
+				updateRoomlist();
+				claimdata.selectedRoom = claimdata.claims[claimdata.selectedClaim].rooms.length-1;
+				updateSidebar();
+				$("#modal").hide();
+			})
+			.appendTo(m);
+	}
+
+	$("<div>")
+		.addClass("cancelButton")
+		.click(function(){ $("#modal").hide(); })
+		.html("cancel")
+		.appendTo(f);
+
+	$("#modal").show();
+}
+
+function showModalForNewItem(c){
+	var h = $("#modalHeader").html("");
+	var m = $("#modalContent").html("");
+	var f = $("#modalFooter").html("");
+
+	$("<h2>")
+		.html("Adding a new item descryption for " + c + " category")
+		.appendTo(h);
+
+	var doneThisModal = function(i){
+		var category = c;
+		var item = i;
+		if (confirm("add '" + item + "' for " + c + " category?")){
+			if (!localItemData) localItemData = {};
+			if (!localItemData[c]) localItemData[c] = {};
+			localItemData[c][i] = daprice.val();
+			console.log(localItemData);
+
+			localStorage.setItem("localItemData", JSON.stringify(localItemData));
+
+			showItemsForCategory(c,$("#mainContentItems"));
+			$("#modal").hide();
+			loadItemData();
+			showItemsForCategory(c);
+			showModalForAddItem(category,item);
+		}
+	}
+
+	var dainput = $("<input>")
+		.addClass("promptInput")
+		.attr("placeholder", "item descryption")
+		.data("c",c)
+		.keypress(function(e){
+			var key=e.keyCode || e.which;
+			if (key==13){
+				doneThisModal(dainput.val());
+			}
+		})
 		.appendTo(m);
+
+	$("<br>").appendTo(m);
+
+	$("<label>").html("$").appendTo(m);
+
+	var daprice = $("<input>")
+		.attr("type", "number")
+		.val(10)
+		.data("c",c)
+		.appendTo(m);
+
+	$("<div>")
+		.addClass("doneButton")
+		.click(function(){ 
+			doneThisModal(dainput.val());
+		})
+		.html("add")
+		.appendTo(f);
+
+	$("<div>")
+		.addClass("cancelButton")
+		.click(function(){ $("#modal").hide(); })
+		.html("cancel")
+		.appendTo(f);
+
+	$("#modal").show();
+	dainput.focus();
+}
+
+function showModalForAddItem(c,i){
+	var h = $("#modalHeader").html("");
+	var m = $("#modalContent").html("");
+	var f = $("#modalFooter").html("");
+
+	$("<h2>")
+		.html("Adding how many " + i + " item (" + c + ")?")
+		.appendTo(h);
 
 	var dainput = $("<div>")
 		.addClass("promptInput")
@@ -136,7 +328,7 @@ function showModalForPrompt(c,i){
 				var num = $(this).html();
 				if (num){
 					setCategorizedItemCount(category, item, num);
-					updateItemsListFromCategorizedItems();
+					updateSidebar();
 				}
 				$("#modal").hide();
 			}
@@ -170,8 +362,6 @@ function showModalForPrompt(c,i){
 		.html("CLEAR")
 		.appendTo(m);
 
-	$("<br>").appendTo(m);
-
 	$("<div>")
 		.addClass("doneButton")
 		.click(function(){ 
@@ -181,18 +371,18 @@ function showModalForPrompt(c,i){
 			var num = inputElement.html();
 			if (num){
 				setCategorizedItemCount(category, item, num);
-				updateItemsListFromCategorizedItems();
+				updateSidebar();
 			}
 			$("#modal").hide();
 		})
 		.html("add")
-		.appendTo(m);
+		.appendTo(f);
 
 	$("<div>")
 		.addClass("cancelButton")
 		.click(function(){ $("#modal").hide(); })
 		.html("cancel")
-		.appendTo(m);
+		.appendTo(f);
 
 	$("#modal").show();
 	//$("#modalContent input").focus();
@@ -212,44 +402,108 @@ function promptForNumberOfItems(c,i){
 	return num;
 }
 
+function newClaim(){
+	if (!claimdata.claims) claimdata.claims = [];
+
+	claimdata.claims.push({});
+	claimdata.selectedClaim = claimdata.claims.length-1;
+
+	var c = claimdata.claims[claimdata.selectedClaim];
+
+	c.date = new Date();
+	c.rooms = [];
+	c.rooms.push({});
+
+	claimdata.selectedRoom = 0;
+
+	saveClaimData();
+	updateRoomlist();
+	debug();
+}
+
+function newRoom(){
+	var c = claimdata.claims[claimdata.selectedClaim];
+	console.log(c);
+	c.rooms.push({});
+	claimdata.selectedRoom = c.rooms.length-1;
+
+	saveClaimData();
+	updateRoomlist();
+	updateSidebar();
+	debug();
+}
+
+function saveClaimData(){
+	localStorage.setItem("claimdata", JSON.stringify(claimdata));
+}
+
+function debug(){
+	var u = $("#dataPanel").html("");
+	$("<h3>").html("Claim #<strong>" + (parseInt(claimdata.selectedClaim)+1) + "</strong>").appendTo(u);
+	//$("<h3>").html(claimdata.claims.length + " claims total").appendTo(u);
+	console.log(claimdata);
+	if (claimdata.selectedClaim){
+		var c = claimdata.claims[claimdata.selectedClaim];
+		//$("<p>").html(c.rooms.length + " rooms [" + claimdata.selectedRoom + "]").appendTo(u);
+		console.log(JSON.stringify(claimdata));
+		console.log(claimdata.selectedRoom);
+	}
+}
 
 $(function(){
 
-	// see if we have saved data
-	if(localStorage.getItem("items")){
-		categorizedItems = JSON.parse(localStorage.getItem("items"));
+	loadItemData();
+	
+	if(localStorage.getItem("claimdata")){
+		claimdata = JSON.parse(localStorage.getItem("claimdata"));
+		if (typeof claimdata.selectedClaim == "undefined"){
+			newClaim();
+			saveClaimData();	
+		}
+		debug();
 	}
+
+	updateRoomlist();
+
+	
 
 	$("#deleteLast").click(function(){
 		currentItems.pop();
 		updateItemsList();
 	});
 
+	$("#debugDelete").click(function(){
+		claimdata = {};
+		saveClaimData();
+	});
+
+	$("#debugOut").click(function(){
+		debug();
+	});
+
+	$("#newClaim").click(newClaim);
+	$("#switchClaim").click(showModalForSwitchingClaim);
+	$("#newRoom").click(newRoom);
 	$("#exportData").click(saveToSpreadsheet);	
 
-	$("#deleteData").click(function(){
-		if (confirm("are you sure to start over?")){
-			categorizedItems = {};
-			localStorage.removeItem("items")
-			updateItemsListFromCategorizedItems();
-		}
-	});	
+	// $("#deleteData").click(function(){
+	// 	if (confirm("are you sure to start over?")){
+	// 		categorizedItems = {};
+	// 		localStorage.removeItem("items")
+	// 		updateSidebar();
+	// 	}
+	// });	
 
 	// Selecting item
 	$(document).on("click","#mainContentItems .items a", function(){
 		var item = $(this).text();
 		var category = $("#mainSideItems a.selected").text();
+		showModalForAddItem(category, item);
+	});
 
-		// get new number
-		var num = promptForNumberOfItems(category, item);
-		if (num){
-			setCategorizedItemCount(category, item, num);
-			updateItemsListFromCategorizedItems();
-		}
-
-		//currentItems.push({c:tt, i:t});
-		//updateItemsList();
-		// $("<li>").html("<strong>"+tt+"</strong>"+t).appendTo($("#sidelist"));
+	$(document).on("click","#mainContentItems .items a.describeButton", function(){
+		var category = $("#mainSideItems a.selected").text();
+		showModalForNewItem(category);
 	});
 
 	// Selecting category
@@ -257,21 +511,39 @@ $(function(){
 		$("#mainSideItems a").removeClass("selected");
 		$(this).addClass("selected");
 		var t = $(this).html();
-		showItemsForCategory(t,$("#mainContentItems"));
+		showItemsForCategory(t);
 	});
 
-	showCategories($("#mainSideItems"));
-		// var u = $("<div>").attr("class", "items").addClass("clearfix").appendTo(dest);
-		// for (i in items){
-		// 	var price = iData[c][i];
-		// 	$("<a>").html("<p>"+i+"</p>").appendTo(u);
-		// }
+	$(document).on("click","#roomList div", function(){
+		var r = $(this).data("r");
+		console.log(r);
+		claimdata.selectedRoom = r;
+		saveClaimData();
+		updateSidebar();
+	});
 
+
+	$(document).on("click", "#sidebar ul li", function(){
+		var c = $(this).data("category");
+		var i = $(this).data("item");
+		var n = $(this).data("item");
+		if (confirm("Remove " + n + "x " + i + " from this room?")){
+			var claim = claimdata.claims[claimdata.selectedClaim];
+			var room = claim.rooms[claimdata.selectedRoom];
+			delete room[c][i];
+		}
+		updateSidebar();
+		saveClaimData();
+	});
+
+	showCategories();
 	$("#debugData").html(JSON.stringify(iData, "", 2));
 
-	showItemsForCategory("Pants",$("#mainContentItems"));
+	showItemsForCategory("Pants");
 	$("#mainSideItems a:first-child").addClass("selected");
-	updateItemsListFromCategorizedItems();
+	updateSidebar();
+
+
 	$("#modal").hide();
 });
 

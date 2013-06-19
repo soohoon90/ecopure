@@ -2,38 +2,67 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="user-scalable=no, initial-scale=1.0">
-	<script src="js/jquery.min.js"></script>
-	<script src="js/idata.js"></script>
-	<script src="js/FileSaver.js"></script>
-	<script src="js/app.js"></script>
+	<script type='text/javascript' src="js/jquery.min.js"></script>
+	<script type='text/javascript' src="js/idata.js"></script>
+	<script type='text/javascript' src="js/FileSaver.js"></script>
+	<script type='text/javascript' src="js/app.js"></script>
+	<script type='text/javascript' src='js/knockout-2.2.1.js'></script>
 	<link href='font/opensans.css' rel="stylesheet" type="text/css">
 	<link href="css/style.css" rel="stylesheet" type="text/css" media="screen" >
 </head>
 <body>
+
 	<div id="modal">
-		<div id="modalContent">
+		<div id="modalInside">
+			<div id="modalHeader"></div>
+			<div id="modalContent"></div>
+			<div id="modalFooter"></div>
 		</div>
 	</div>
+
 	<div id="appWrapper">
+
+		<div id="header">
+			<h1><strong>EcoPure</strong> Insurance Claim Generator</h1>
+<!-- 			<div id="debugDelete" class="ilnbtn">delete</div>
+			<div id="debugOut" class="ilnbtn">out</div> -->
+		</div>
+
 		<div id="content">
+			<div id="controlbar">
+				<h2>Control</h2>
+				<div id="dataPanel">
+
+				</div>
+				<div class="controlGroup">
+					<div id="newClaim" class="btn">Create a New Claim</div>
+					<div id="switchClaim" class="btn">Switch to a different Claim</div>
+					<div id="exportData" class="btn">Export this Claim</div>
+				</div>
+				<div class="controlGroup">
+					<div id="newRoom" class="btn">Add a Room to this Claim</div>
+					<h3>Switch Room</h3>
+					<div id="roomList">
+
+					</div>
+				</div>
+				<!-- <div class="controlGroup"> -->
+					<!-- <div id="exportData" class="btn">Review Claim</div> -->
+					<!-- <div id="deleteData" class="btn">Start Over</div> -->
+				<!-- </div> -->
+			</div>
 		
 			<div id="sidebar">
-				<h2>Items</h2>
-				<div id="deleteLast">delete last added item</div>
-				<p id="lastItem"></p>
-				<ul id="sidelist">
-				</ul>
-				<div id="sideControls">
-					<div id="exportData">Save to a file (testing)</div>
-					<div id="deleteData">Start Over</div>
-				</div>
+				<h2>Item List</h2>
+				<div id="sidebarContent"></div>
 			</div>
 		
 			<div id="main">
 				<h2>Itemizing</h2>
 				<div id="mainSide">
 					<h3>Categories</h3>
-					<div id="mainSideItems"></div>
+					<div id="mainSideItems">
+					</div>
 				</div>
 				<div id="mainContent">
 					<h3>Items</h3>
@@ -45,11 +74,10 @@
 				</div>
 			</div>		
 		</div>
-	</div>
-	
-	<div id="debug">
-		<h2>Debug</h2>
-		<pre id="debugData"></pre>
+
+		<div id="footer">
+
+		</div>
 	</div>
 </body>
 </html>

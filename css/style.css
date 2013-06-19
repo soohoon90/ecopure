@@ -8,6 +8,7 @@
 html, body {
   -ms-content-zooming: none;
   height: 100%;
+
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -18,9 +19,6 @@ html, body {
 
 @-ms-viewport { width: device-width; }
 
-body{
-   background-image: url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/low_contrast_linen.png');
-}
 
 #modal{
   background-color: rgba(0,0,0,.5);
@@ -29,7 +27,29 @@ body{
   z-index: 10;
 }
 
+#modalHeader{
+  z-index: 20;
+}
+
 #modalContent{
+  position:absolute;
+  overflow: auto;
+  top: 50px;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+}
+
+#modalFooter{
+  z-index: 20;
+  position: absolute;
+  left: 0;
+  bottom :0;
+  right: 0;
+}
+
+#modalInside{
+  overflow: hidden;
   background-color: white;
   border-radius: 20px;
   box-shadow: 0 0 15px rgba(0,0,0,.5);
@@ -45,11 +65,12 @@ body{
   font-size: 16px;
   width: 20em;
   padding: 1em;
+  height:16px;
   border: 1px solid #ddd;
   margin: 10px auto;
 }
 
-#modalContent .cancelButton{
+#modalFooter .cancelButton{
   width: 10em;
   display: inline-block;
   text-align: center;
@@ -63,7 +84,7 @@ body{
   cursor: pointer;
 }
 
-#modalContent .doneButton{
+#modalFooter .doneButton{
   width: 10em;
   display: inline-block;
   text-align: center;
@@ -78,6 +99,7 @@ body{
 }
 
 #modalContent .numButton{
+  font-size: 15px;
   width: 3em;
   height: 1.5em;
   display: inline-block;
@@ -86,111 +108,115 @@ body{
   border: 1px solid #ddd;
   margin: 5px;
   padding: 10px;
-  font-size: 20px;
+  font-weight: 600;
   color: #333;
   background-color: white;
   cursor: pointer;
 }
 
-
 #appWrapper{
   overflow: hidden;
   position: absolute;
+  top: 0%; left: 0%; right: 0%; bottom: 0%;
   /*top: 2%; left: 2%; right: 2%; bottom: 2%;*/
   /*border-radius: 15px;*/
   /*box-shadow: 0 0 15px rgba(0,0,0,.5); */
-  width: 1366px;
-  height: 786px;
+  /*width: 1366px;*/
+  /*height: 786px;*/
 }
 
-#debug{
-  background-color: #3D6172;
-  position:absolute;
-  height: 100%;
-  width: 450px;
+#header{
+  position: absolute;
+  top :0;
+  height: 40px;
+  left: 0;
   right: 0;
-  overflow: auto;
-  display: none;
-}
-
-#debug h2{
-  text-shadow: 1px 1px 3px rgba(0,0,0,.5);
-  text-transform: uppercase;
-  font-weight: 700;
-  padding: 0.6em 0.8em;
-  //border-bottom: 1px solid rgba(255,255,255,0.5);
-  //background-color: #1B4B2D;
-  background: linear-gradient(to bottom, #1B3D50 0%, #173145 100%);
+  background-color: #222;
   color: white;
+  /*box-shadow: inset 0 0 15px rgba(0,0,0,.6);*/
 }
 
-#debugData{
-  padding: 10px;
+#header h1{
+  line-height: 1;
+  font-size: 30px;
+  text-shadow: 0 0 5px rgba(0,0,0,.5);
+  margin :0;
+  padding: 5px;
+  font-weight: 300;
+  display: inline-block;
 }
 
+#content{
+  position:absolute;
+  top: 40px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#footer{
+}
 
 body{
  -ms-touch-action: none !important;
   font-family: "Open Sans", sans-serif;
-  background-color: #333;
+  background-color: #333; 
   font-size: 10px;
   color: #eee;
   overflow: hidden;
 }
 
-#left{
-  background-color: #3D6172;
+#dataPanel{
+  padding-top: 1em;
+}
+
+#dataPanel h3{
+  text-align: center;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  text-shadow: 0 0 5px rgba(0,0,0,.5);
+}
+
+#controlbar{
+  overflow-y: auto; 
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  position: absolute;
   width: 100px;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #333;
+  /*box-shadow: inset 0 0 15px rgba(0,0,0,.6);*/
+}
+
+#controlbar h2{
+  text-shadow: 1px 1px 3px rgba(0,0,0,.5);
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 0.6em 0.8em;
+  background: linear-gradient(to bottom, #888 0%, #555 100%);
+  color: white;
+}
+
+#sidebar{
+  overflow-y: auto; 
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  position: absolute;
+  width: 200px;
+  left: 100px;
+  top: 0;
+  bottom: 0;
+  background-color: #224767;
+}
+
+#main{
+  background-color: #eee;
+  position: absolute;
   height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-@media screen and (min-width: 800px) {
-  #sidebar{
-    overflow-y: auto; 
-    -ms-overflow-style: -ms-autohiding-scrollbar;
-    position: absolute;
-    width: 250px;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    background-color: #224767;
-  }
-
-  #main{
-    background-color: #eee;
-    background-image: url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/whitey.png');
-    position: absolute;
-    height: 100%;
-    left:250px;
-    right:0;
-    top: 0%;
-  }
-}
-
-@media screen and (max-width: 799px) {
-  #sidebar{
-    overflow-y: auto; 
-    -ms-overflow-style: -ms-autohiding-scrollbar;
-    position: absolute;
-    height: 20%;
-    left: 0;
-    top: 0;
-    right: 0;
-    background-color: #224767;
-  }
-
-  #main{
-    background-color: #eee;  
-    background-image: url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/whitey.png');
-    position: absolute;
-    height: 100%;
-    left: 0;
-    right:0;
-    top: 20%;
-    bottom: 0;
-  }
+  left: 300px;
+  right:0;
+  top: 0%;
 }
 
 #sidebar h2{
@@ -202,20 +228,39 @@ body{
   //background-color: #1B4B2D;
   background: linear-gradient(to bottom, #1B3D50 0%, #173145 100%);
   color: white;
+  margin-bottom: 10px;
+}
+
+#sidebar h3{
+  text-align: center;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  text-shadow: 0 0 5px rgba(0,0,0,.5);
+}
+
+#sidebarContent strong{
+  margin-left: 10px;
+}
+
+#sidebarContent span{
+  font-size: 13px;
+  text-align: right;
+  display: inline-block;
+  font-weight: 600;
+  color: #a33;
+  width: 30px;
 }
 
 #sidebar ul{
   list-style: none;
   display: block;
-  // border-radius: 5px;
-  // border: 1px solid black;
-  //background-color: white;
   margin: 10px;
-  color: #999;
+  color: #555;
 }
 
 #sidebar ul li{
-  padding: 1em;
+  padding: 0.5em;
   background-color: white;
   border-bottom: 1px solid rgba(200,200,200,0.7);
 }
@@ -239,52 +284,50 @@ body{
   background-color: #eee;
 }
 
-#deleteLast{
-  text-align: center;
-  border-radius: 10px;
-  margin: 10px;
-  padding: 10px;
-  color: white;
-  background-color: #e33;
-  cursor: pointer;
-}
-
-#deleteLast strong{
- text-transform: uppercase;
-}
-
 #exportData{
+  background-color: #393;
+}
+
+.btn{
   text-align: center;
   border-radius: 10px;
-  margin: 10px;
-  padding: 10px;
+  margin: 10px 5px;
+  padding: 10px 5px;
   font-size: 13px;
   text-shadow: 0 1px 1px rgba(0,0,0,.5);
   color: white;
-  background-color: #393;
+  background-color: #666;
   cursor: pointer;
+}
+
+.ilnbtn{
+  display: inline-block;
+  text-align: center;
+  font-size: 10px;
+  border-radius: 10px;
+  margin: 10px 5px;
+  padding: 10px 5px;
+  text-shadow: 0 1px 1px rgba(0,0,0,.5);
+  color: white;
+  background-color: #666;
+  cursor: pointer;
+}
+
+.btn:hover{
+  background-color: #555;
+}
+
+.controlGroup{
+  padding: 0.5em 0.2em;
+  border-bottom: 1px solid #999;
+}
+
+.controlGroup:last-child{
+  border: none;
 }
 
 #deleteData{
-  text-align: center;
-  border-radius: 10px;
-  margin: 10px;
-  padding: 10px;
-  font-size: 13px;
-  text-shadow: 0 1px 1px rgba(0,0,0,.5);
-  color: white;
   background-color: #933;
-  cursor: pointer;
-}
-
-#lastItem{
-  font-size: 14px;
-  text-align: center;
-  //border-radius: 10px;
-  //margin: 10px;
-  padding: 10px;
-  //color: #333;
-  //background-color: #eee;
 }
 
 #inputClaimDetail input{
@@ -306,7 +349,6 @@ body{
   text-transform: uppercase;
   font-weight: 700;
   padding: 0.6em 0.8em;
-  height: 40px;
   background: linear-gradient(to bottom, rgba(200,200,200,1) 0%,rgba(166,166,166,1) 100%);
   color: white;
 }
@@ -327,8 +369,8 @@ body{
   -ms-overflow-style: -ms-autohiding-scrollbar;
   position: absolute;
   left: 0;
-  top: 40px;
-  height: 160px;
+  top: 38px;
+  height: 162px;
   right: 0;
   background-color: rgb(96,96,96);
 }
@@ -413,6 +455,16 @@ body{
 	background-color: #eee;
 }
 
+#mainContentItems .items a.describeButton{
+  background-color: #9aa;
+  color: white;
+}
+
+#mainContentItems .items a.describeButton:hover{
+  background-color: #899;
+  color: white;
+}
+
 #mainContentItems .items a p {
   display: table-cell; 
   vertical-align: middle; 
@@ -425,4 +477,37 @@ body{
     height: 0;
     clear: both;
     visibility: hidden;
+}
+
+#claimList{
+  box-shadow: inset 0 0 15px rgba(0,0,0,.5);
+  height: 100px;
+  overflow: auto;
+}
+
+#claimList div{
+  padding: 0.5em;
+  background-color: #ddd;
+  color: #333;
+  margin: 5px;
+  border-radius: 10px;
+}
+
+#roomList div{
+  padding: 0.5em;
+  background-color: #ddd;
+  color: #333;
+  margin: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.claimButton{
+  font-size: 14px;
+  padding: 1em;
+  background-color: #ddd;
+  color: #333;
+  margin: 5px;
+  border-radius: 10px;
+  cursor: pointer;
 }
