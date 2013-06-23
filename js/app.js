@@ -144,6 +144,17 @@ function saveToSpreadsheet(){
 		);
 }
 
+function saveToSpreadsheetWithPrice(){
+	saveAs(
+			  new Blob(
+				  [itemsToCSV(true)]
+				, {type: "text/plain;charset=" + document.characterSet}
+			)
+			, "exported.csv"
+		);
+}
+
+
 function quoteString(string){
 	return '"'+string+'"';
 }
@@ -151,8 +162,17 @@ function quoteString(string){
 function itemsToCSV(withPrice){
 	var rows = [];
 
-	rows.push(quoteString("room number") + "," + quoteString("category") + "," + quoteString("description") + "," + quoteString("quantity"))
+	var heading = "";
+	heading += quoteString("Room Number");
+	heading += "," + quoteString("Category");
+	heading += "," + quoteString("Description");
+	heading += "," + quoteString("Quantity");
+	if (withPrice){
+		heading += "," + quoteString("Price per Item");
+		heading += "," + quoteString("Total Price");
+	}
 
+	rows.push(heading);
 
 	var claim = claimdata.claims[claimdata.selectedClaim];
 
@@ -164,35 +184,15 @@ function itemsToCSV(withPrice){
 				row += ',' + quoteString(c);
 				row += ','+ quoteString(i);
 				row += ','+ quoteString(claim.rooms[ri][c][i]);
+				if (withPrice){
+					row += ',' + quoteString(itemData[c][i]);
+					row += ',' + quoteString(itemData[c][i] * claim.rooms[ri][c][i]);
+				}
+
 				rows.push(row);
 			}
 		}
 	}
-
-	// for (var ri in claim.rooms){
-	// 	rows.push("room "+ ri+1);
-	// 	for (var c in claim.rooms[ri]){
-	// 		for (var i in claim.rooms[ri][c]){
-	// 			var row = quoteString(c);
-	// 			row += ','+ quoteString(i);
-	// 			row += ','+ quoteString(claim.rooms[ri][c][i]);
-	// 			rows.push(row);
-	// 		}
-	// 	}
-	// }
-
-	// for (var r in categorizedItems){
-	// 	for (var c in categorizedItems[r]){
-	// 		for (var i in categorizedItems[r][c]){
-	// 			var r = "";
-	// 			r += quoteString(r);
-	// 			r += ','+ quoteString(c);
-	// 			r += ','+ quoteString(i);
-	// 			r += ','+ quoteString(categorizedItems[r][c][i]);
-	// 			rows.push(r);
-	// 		}
-	// 	}
-	// }
 
 	return rows.join("\r\n");
 }
@@ -362,6 +362,16 @@ function showModalForAddItem(c,i){
 		.html("CLEAR")
 		.appendTo(m);
 
+	var checkbox = $("<input>")
+		.attr("id", "salvagable")
+		.attr("type", "checkbox")
+		.appendTo(m)
+
+	$("<label>")
+		.attr("for", "salvagable")
+		.html(" Non Salvagable")
+		.appendTo(m);
+
 	$("<div>")
 		.addClass("doneButton")
 		.click(function(){ 
@@ -370,6 +380,9 @@ function showModalForAddItem(c,i){
 			var item = inputElement.data("i");
 			var num = inputElement.html();
 			if (num){
+				if ($("#salvagable").val()){
+					item = item + " (Non Salvagable)";
+				}
 				setCategorizedItemCount(category, item, num);
 				updateSidebar();
 			}
@@ -488,15 +501,8 @@ $(function(){
 	$("#newClaim").click(newClaim);
 	$("#switchClaim").click(showModalForSwitchingClaim);
 	$("#newRoom").click(newRoom);
-	$("#exportData").click(saveToSpreadsheet);	
-
-	// $("#deleteData").click(function(){
-	// 	if (confirm("are you sure to start over?")){
-	// 		categorizedItems = {};
-	// 		localStorage.removeItem("items")
-	// 		updateSidebar();
-	// 	}
-	// });	
+	$("#exportData").click(saveToSpreadsheet);
+	$("#exportDataWithPrice").click(saveToSpreadsheetWithPrice);
 
 	// Selecting item
 	$(document).on("click","#mainContentItems .items a", function(){
