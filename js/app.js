@@ -87,10 +87,19 @@ function updateRoomlist(){
 				totalItems += r[c][n];
 			}
 		}
-		$("<div>")
+		if (claimdata.selectedRoom == i){
+			$("<div>")
+			.html("Room #" + (parseInt(i)+1) + " (" + differentItems + "/" + totalItems + ")" )
+			.data("r", i)
+			.addClass("selected")
+			.appendTo(u);
+		}else{
+			$("<div>")
 			.html("Room #" + (parseInt(i)+1) + " (" + differentItems + "/" + totalItems + ")" )
 			.data("r", i)
 			.appendTo(u);
+		}
+		
 	}
 
 }
@@ -112,7 +121,7 @@ function updateSidebar(){
 		}
 	}
 
-	$("<h3>").html(differentItems + " different items. " + totalItems + " items total.").appendTo(uu);
+	// $("<h3>").html(differentItems + " different items. " + totalItems + " items total.").appendTo(uu);
 
 	var u = $("<div>").appendTo(uu);
 	var o = room;
@@ -379,8 +388,8 @@ function showModalForAddItem(c,i){
 			var category = inputElement.data("c");
 			var item = inputElement.data("i");
 			var num = inputElement.html();
-			if (num){
-				if ($("#salvagable").val()){
+			if (num > 0){
+				if ($("#salvagable").is(':checked')){
 					item = item + " (Non Salvagable)";
 				}
 				setCategorizedItemCount(category, item, num);
@@ -530,6 +539,7 @@ $(function(){
 		claimdata.selectedRoom = r;
 		saveClaimData();
 		updateSidebar();
+		updateRoomlist();
 	});
 
 

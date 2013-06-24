@@ -170,14 +170,6 @@ body{
   padding-top: 1em;
 }
 
-#dataPanel h3{
-  text-align: center;
-  color: white;
-  font-size: 10px;
-  font-weight: 600;
-  text-shadow: 0 0 5px rgba(0,0,0,.5);
-}
-
 #controlbar{
   overflow-y: auto; 
   -ms-overflow-style: -ms-autohiding-scrollbar;
@@ -197,6 +189,14 @@ body{
   padding: 0.6em 0.8em;
   background: linear-gradient(to bottom, #888 0%, #555 100%);
   color: white;
+}
+
+#controlbar h3{
+  text-align: center;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  text-shadow: 0 0 5px rgba(0,0,0,.5);
 }
 
 #sidebar{
@@ -237,6 +237,7 @@ body{
   font-size: 10px;
   font-weight: 600;
   text-shadow: 0 0 5px rgba(0,0,0,.5);
+  margin-bottom: 0.5em;
 }
 
 #sidebarContent strong{
@@ -284,16 +285,22 @@ body{
   background-color: #eee;
 }
 
-#exportData{
+#exportData,
+#exportDataWithPrice{
+  background-color: #282;
+}
+
+#exportData:hover,
+#exportDataWithPrice:hover{
   background-color: #393;
 }
 
 .btn{
   text-align: center;
   border-radius: 10px;
-  margin: 10px 5px;
-  padding: 10px 5px;
-  font-size: 11px;
+  margin: 7px 4px;
+  padding: 7px 4px;
+  font-size: 9px;
   text-shadow: 0 1px 1px rgba(0,0,0,.5);
   color: white;
   background-color: #666;
@@ -500,6 +507,11 @@ body{
   margin: 5px;
   border-radius: 10px;
   cursor: pointer;
+}
+
+#roomList div.selected{
+  background-color: #ee9;
+  font-weight: bolder;
 }
 
 .claimButton{
