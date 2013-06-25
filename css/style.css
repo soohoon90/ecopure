@@ -6,47 +6,217 @@
 }
 
 html, body {
+  -ms-content-zooming: none;
   height: 100%;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-body{
-   background-image: url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/low_contrast_linen.png');
+@-ms-viewport { width: device-width; }
+
+
+#modal{
+  background-color: rgba(0,0,0,.5);
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 10;
+}
+
+#modalHeader{
+  z-index: 20;
+}
+
+#modalContent{
+  position:absolute;
+  overflow: auto;
+  top: 50px;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+}
+
+#modalFooter{
+  z-index: 20;
+  position: absolute;
+  left: 0;
+  bottom :0;
+  right: 0;
+}
+
+#modalInside{
+  overflow: hidden;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(0,0,0,.5);
+  position: absolute;
+  top: 20%; left: 30%; right: 30%; bottom: 20%;
+  padding: 20px;
+  color: black;
+  text-align: center;
+}
+
+#modalContent .promptInput{
+  text-align: center;
+  font-size: 16px;
+  width: 20em;
+  padding: 1em;
+  height:16px;
+  border: 1px solid #ddd;
+  margin: 10px auto;
+}
+
+#modalFooter .cancelButton{
+  width: 10em;
+  display: inline-block;
+  text-align: center;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+  font-size: 13px;
+  text-shadow: 0 1px 1px rgba(0,0,0,.5);
+  color: white;
+  background-color: #933;
+  cursor: pointer;
+}
+
+#modalFooter .doneButton{
+  width: 10em;
+  display: inline-block;
+  text-align: center;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+  font-size: 13px;
+  text-shadow: 0 1px 1px rgba(0,0,0,.5);
+  color: white;
+  background-color: #393;
+  cursor: pointer;
+}
+
+#modalContent .numButton{
+  font-size: 15px;
+  width: 3em;
+  height: 1.5em;
+  display: inline-block;
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin: 5px;
+  padding: 10px;
+  font-weight: 600;
+  color: #333;
+  background-color: white;
+  cursor: pointer;
 }
 
 #appWrapper{
   overflow: hidden;
   position: absolute;
-  top: 5%;
-  left: 5%;
-  right: 5%;
-  bottom: 5%;
-  border-radius: 15px;
-  box-shadow: 0 0 15px rgba(0,0,0,.5);
+  top: 0%; left: 0%; right: 0%; bottom: 0%;
+  /*top: 2%; left: 2%; right: 2%; bottom: 2%;*/
+  /*border-radius: 15px;*/
+  /*box-shadow: 0 0 15px rgba(0,0,0,.5); */
+  /*width: 1366px;*/
+  /*height: 786px;*/
+}
+
+#header{
+  position: absolute;
+  top :0;
+  height: 40px;
+  left: 0;
+  right: 0;
+  background-color: #222;
+  color: white;
+  /*box-shadow: inset 0 0 15px rgba(0,0,0,.6);*/
+}
+
+#header h1{
+  line-height: 1;
+  font-size: 30px;
+  text-shadow: 0 0 5px rgba(0,0,0,.5);
+  margin :0;
+  padding: 5px;
+  font-weight: 300;
+  display: inline-block;
+}
+
+#content{
+  position:absolute;
+  top: 40px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#footer{
 }
 
 body{
+ -ms-touch-action: none !important;
   font-family: "Open Sans", sans-serif;
-  background-color: #333;
+  background-color: #333; 
   font-size: 10px;
   color: #eee;
   overflow: hidden;
 }
 
-#left{
-  background-color: #3D6172;
-  width: 100px;
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
+#dataPanel{
+  padding-top: 1em;
 }
 
-#sidebar{
+#controlbar{
+  overflow-y: auto; 
+  -ms-overflow-style: -ms-autohiding-scrollbar;
   position: absolute;
-  width: 250px;
+  width: 100px;
   left: 0;
   top: 0;
   bottom: 0;
+  background-color: #333;
+  /*box-shadow: inset 0 0 15px rgba(0,0,0,.6);*/
+}
+
+#controlbar h2{
+  text-shadow: 1px 1px 3px rgba(0,0,0,.5);
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 0.6em 0.8em;
+  background: linear-gradient(to bottom, #888 0%, #555 100%);
+  color: white;
+}
+
+#controlbar h3{
+  text-align: center;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  text-shadow: 0 0 5px rgba(0,0,0,.5);
+}
+
+#sidebar{
+  overflow-y: auto; 
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  position: absolute;
+  width: 200px;
+  left: 100px;
+  top: 0;
+  bottom: 0;
   background-color: #224767;
+}
+
+#main{
+  background-color: #eee;
+  position: absolute;
+  height: 100%;
+  left: 300px;
+  right:0;
+  top: 0%;
 }
 
 #sidebar h2{
@@ -58,59 +228,40 @@ body{
   //background-color: #1B4B2D;
   background: linear-gradient(to bottom, #1B3D50 0%, #173145 100%);
   color: white;
+  margin-bottom: 10px;
 }
 
-#rooms{
-  display: none;
-    top: 5%;
-}
-
-#items{
-  display: none;
-    top: 5%;
-}
-
-#main{
-  overflow-y:scroll; 
-  background-image: url('http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/whitey.png');
-  position: absolute;
-  height: 100%;
-  left:250px;
-  right:0;
-  top: 0%;
-  background-color: #ddd;
-  color: black;
-}
-
-#main h2{
-  text-shadow: 1px 1px 3px rgba(0,0,0,.5);
-  text-transform: uppercase;
-  font-weight: 700;
-  padding: 0.6em 0.8em;
-  background: linear-gradient(to bottom, rgba(200,200,200,1) 0%,rgba(166,166,166,1) 100%);
+#sidebar h3{
+  text-align: center;
   color: white;
+  font-size: 10px;
+  font-weight: 600;
+  text-shadow: 0 0 5px rgba(0,0,0,.5);
+  margin-bottom: 0.5em;
 }
 
-#debug{
-  position:absolute;
-  height: 30%;
-  width: 100%;
-  bottom: 0 !important;
-  display: none;
+#sidebarContent strong{
+  margin-left: 10px;
+}
+
+#sidebarContent span{
+  font-size: 13px;
+  text-align: right;
+  display: inline-block;
+  font-weight: 600;
+  color: #a33;
+  width: 30px;
 }
 
 #sidebar ul{
   list-style: none;
   display: block;
-  // border-radius: 5px;
-  // border: 1px solid black;
-  //background-color: white;
   margin: 10px;
-  color: #999;
+  color: #555;
 }
 
 #sidebar ul li{
-  padding: 1em;
+  padding: 0.5em;
   background-color: white;
   border-bottom: 1px solid rgba(200,200,200,0.7);
 }
@@ -134,79 +285,56 @@ body{
   background-color: #eee;
 }
 
-
-#claimList{
-  list-style: none;
-  display: block;
-  // border-radius: 5px;
-  // border: 1px solid black;
-  //background-color: white;
-  margin: 10px;
-  color: #999;
+#exportData,
+#exportDataWithPrice{
+  background-color: #282;
 }
 
-#claimList li{
-  padding: 1em;
-  background-color: white;
-  border-bottom: 1px solid rgba(200,200,200,0.7);
+#exportData:hover,
+#exportDataWithPrice:hover{
+  background-color: #393;
 }
 
-#claimList li:first-child{
-  border-radius: 5px 5px 0 0;
-}
-
-#claimList li:last-child{
-  border: none;
-  border-radius: 0 0 5px 5px;
-}
-
-#claimList li:hover{
-  cursor: pointer;
-  background-color: #eee;
-}
-
-#claimList li strong{
-  color: #333;
-  font-weight: 700;
-  font-size: 1.4em;
-  display: block;
-}
-
-#claimList li span{
-  color: #bbb;
-  float: right;
-  display: block;
-}
-
-#claimControl{
-  display: block;
-  border-radius: 5px;
-  margin: 10px;
-  color: #999;
+.btn{
   text-align: center;
-}
-
-#claimControl button{
-  width: 100%;
-}
-
-button{
-  background-color: #5BA149;
-  font-family: "Open Sans", sans-serif;
-  font-size: 16px;
+  border-radius: 10px;
+  margin: 7px 4px;
+  padding: 7px 4px;
+  font-size: 9px;
+  text-shadow: 0 1px 1px rgba(0,0,0,.5);
   color: white;
-  padding: 0.7em 2em;
-  border-radius: 0.3em;
-  box-shadow: 1px 1px 2px rgba(0,0,0,.3);
+  background-color: #666;
   cursor: pointer;
 }
 
-button:hover{
-  background-color: #36773D;
+.ilnbtn{
+  display: inline-block;
+  text-align: center;
+  font-size: 10px;
+  border-radius: 10px;
+  margin: 10px 5px;
+  padding: 10px 5px;
+  text-shadow: 0 1px 1px rgba(0,0,0,.5);
+  color: white;
+  background-color: #666;
+  cursor: pointer;
 }
 
-button:active{
-  box-shadow: none;
+.btn:hover{
+  background-color: #555;
+}
+
+.controlGroup{
+  padding: 0.5em 0.2em;
+  border-bottom: 1px solid #999;
+}
+
+.controlGroup:last-child{
+  border: none;
+}
+
+#deleteData{
+  background-color: #933;
 }
 
 #inputClaimDetail input{
@@ -223,27 +351,175 @@ button:active{
   padding: 20px;
 }
 
-#debugData{
-  padding: 10px;
+#main h2{
+  text-shadow: 1px 1px 3px rgba(0,0,0,.5);
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 0.6em 0.8em;
+  background: linear-gradient(to bottom, rgba(200,200,200,1) 0%,rgba(166,166,166,1) 100%);
+  color: white;
 }
 
-#main .items{
-  border-radius: 10px;
-  background-color: #eee;
+#main h3{
+  text-shadow: 1px 1px 3px rgba(0,0,0,.5);
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 0.6em 0.8em;
+  background: linear-gradient(to bottom, rgba(200,200,200,1) 0%,rgba(166,166,166,1) 100%);
+  color: white;
+  // text-align: center;
+}
+
+#mainSide{
+  overflow-x: hidden;
+  overflow-y: auto; 
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  position: absolute;
+  left: 0;
+  top: 38px;
+  height: 162px;
+  right: 0;
+  background-color: rgb(96,96,96);
+}
+
+#mainSide h3{
+  background: linear-gradient(to bottom, rgba(130,130,130,1) 0%,rgba(96,96,96,1) 100%);
+}
+
+#mainSideItems{
+  padding: 0 2em;
+}
+
+#mainSideItems a{
+  position:relative;
+  font-weight: 600;
+  text-align: center;
+  font-size: 14px;
+  display: block;
+  float: left;
+  margin: 0 0.5em 0.5em 0;
+  text-overflow: ellipsis;
+  overflow:hidden;
+  padding: 0.5em 1em;
+  //border: 1px solid #ddd;
+  background-color: #fafafa;
+  cursor: pointer;
+  border-radius: 1em;
   color: #333;
-  margin: 25px;
-  padding: 20px;
+  box-shadow: 0 0 5px rgba(0,0,0,.5);
+
+/*  text-align: center;
+  cursor: pointer;
+  color: black;
+  display: block;
+  margin: 5px;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #eee;*/
 }
 
-#main .items a{
-	display: block;
-	border-radius: 5px;
-	padding: 1em;
-	border: 1px solid #ddd;
+#mainSideItems a.selected{
+  color: orange;
+}
+
+#mainContent{
+  overflow-x: hidden;
+  overflow-y: auto; 
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 200px;
+  bottom :0;
+}
+
+#mainContentItems .items{
+  /*border-radius: 10px;
+  background-color: #eee;
+  margin: 25px; */
+  padding: 20px;
+  color: #333;
+}
+
+#mainContentItems .items a{
+	position:relative;
+	font-weight: 600;
+	//text-align: center;
+	font-size: 16px;
+	display: inline-table;
+	margin: 0 0.5em 0.5em 0;
+	width: 10em;
+	height: 4em;
+	//overflow:hidden;
+	padding: 0.5em;
 	background-color: #fafafa;
 	cursor: pointer;
+	border-radius: 1em;
+	vertical-align: middle;
 }
 
-#main .items a:hover{
+#mainContentItems .items a:hover{
 	background-color: #eee;
+}
+
+#mainContentItems .items a.describeButton{
+  background-color: #9aa;
+  color: white;
+}
+
+#mainContentItems .items a.describeButton:hover{
+  background-color: #899;
+  color: white;
+}
+
+#mainContentItems .items a p {
+  display: table-cell; 
+  vertical-align: middle; 
+  text-align: center; 
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+#claimList{
+  box-shadow: inset 0 0 15px rgba(0,0,0,.5);
+  height: 100px;
+  overflow: auto;
+}
+
+#claimList div{
+  padding: 0.5em;
+  background-color: #ddd;
+  color: #333;
+  margin: 5px;
+  border-radius: 10px;
+}
+
+#roomList div{
+  padding: 0.5em;
+  background-color: #ddd;
+  color: #333;
+  margin: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#roomList div.selected{
+  background-color: #ee9;
+  font-weight: bolder;
+}
+
+.claimButton{
+  font-size: 14px;
+  padding: 1em;
+  background-color: #ddd;
+  color: #333;
+  margin: 5px;
+  border-radius: 10px;
+  cursor: pointer;
 }
