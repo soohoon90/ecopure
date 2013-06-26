@@ -82,20 +82,33 @@ function updateRoomlist(){
 		var totalItems = 0;
 		var differentItems = 0;
 		for (var c in r){
-			for (var n in r[c]){
-				differentItems++;
-				totalItems += r[c][n];
+			if (c != "name"){
+				for (var n in r[c]){
+					differentItems++;
+					totalItems += r[c][n];
+				}
 			}
 		}
+
+		var roomButtonText = "";
+		roomButtonText += "Room #" + (parseInt(i)+1);
+		if (r["name"]){
+			roomButtonText += "<br/>";
+			roomButtonText += r["name"];
+		}
+		roomButtonText += "<br/>";
+		roomButtonText += "(" + differentItems + "/" + totalItems + ")";
+
+
 		if (claimdata.selectedRoom == i){
 			$("<div>")
-			.html("Room #" + (parseInt(i)+1) + " (" + differentItems + "/" + totalItems + ")" )
+			.html(roomButtonText)
 			.data("r", i)
 			.addClass("selected")
 			.appendTo(u);
 		}else{
 			$("<div>")
-			.html("Room #" + (parseInt(i)+1) + " (" + differentItems + "/" + totalItems + ")" )
+			.html(roomButtonText)
 			.data("r", i)
 			.appendTo(u);
 		}
@@ -115,9 +128,11 @@ function updateSidebar(){
 	var totalItems = 0;
 	var differentItems = 0;
 	for (var c in room){
-		for (var n in room[c]){
-			differentItems++;
-			totalItems += room[c][n];
+		if (c != "name"){
+			for (var n in room[c]){
+				differentItems++;
+				totalItems += room[c][n];
+			}
 		}
 	}
 
@@ -127,18 +142,20 @@ function updateSidebar(){
 	var o = room;
 
 	for (var c in o){
-		console.log(c);
-		$("<strong>").html(c).appendTo(u);
-		var uu = $("<ul>").appendTo(u);
-		for (var i in o[c]){
+		if (c != "name"){
+			console.log(c);
+			$("<strong>").html(c).appendTo(u);
+			var uu = $("<ul>").appendTo(u);
+			for (var i in o[c]){
 
-			var num = o[c][i];
-			$("<li>")
-				.data("item", i)
-				.data("count", num)
-				.data("category", c)
-				.html("<span>"+num+"x </span> "+i)
-				.appendTo(uu);
+				var num = o[c][i];
+				$("<li>")
+					.data("item", i)
+					.data("count", num)
+					.data("category", c)
+					.html("<span>"+num+"x </span> "+i)
+					.appendTo(uu);
+			}
 		}
 	}
 }
@@ -187,23 +204,152 @@ function itemsToCSV(withPrice){
 
 	for (var ri in claim.rooms){
 		for (var c in claim.rooms[ri]){
-			for (var i in claim.rooms[ri][c]){
-				var row = ""
-				row += quoteString(parseInt(ri)+1);
-				row += ',' + quoteString(c);
-				row += ','+ quoteString(i);
-				row += ','+ quoteString(claim.rooms[ri][c][i]);
-				if (withPrice){
-					row += ',' + quoteString(itemData[c][i]);
-					row += ',' + quoteString(itemData[c][i] * claim.rooms[ri][c][i]);
-				}
+			if (c != "name"){
+				for (var i in claim.rooms[ri][c]){
+					var row = ""
+					row += quoteString(parseInt(ri)+1);
+					row += ',' + quoteString(c);
+					row += ','+ quoteString(i);
+					row += ','+ quoteString(claim.rooms[ri][c][i]);
+					if (withPrice){
+						row += ',' + quoteString(itemData[c][i]);
+						row += ',' + quoteString(itemData[c][i] * claim.rooms[ri][c][i]);
+					}
 
-				rows.push(row);
+					rows.push(row);
+				}
 			}
 		}
 	}
 
 	return rows.join("\r\n");
+}
+
+function showModalForNewClaim(){
+	var h = $("#modalHeader").html("");
+	var m = $("#modalContent").html("");
+	var f = $("#modalFooter").html("");
+
+	$("<h2>")
+		.html("Creating new Claim")
+		.appendTo(h);
+
+	function doneThisModal(adjuster, company, insured, claimn, refn){
+		if (!claimdata.claims) claimdata.claims = [];
+
+		claimdata.claims.push({});
+		claimdata.selectedClaim = claimdata.claims.length-1;
+
+		var c = claimdata.claims[claimdata.selectedClaim];
+
+		c.adjuster = adjuster;
+		c.company = company;
+		c.insured = insured;
+		c.claimn = claimn;
+		c.refn = refn;
+		c.date = new Date();
+		c.rooms = [];
+
+		saveClaimData();
+		updateRoomlist();
+		updateSidebar();
+		debug();
+
+		$("#modal").hide();
+		showModalForNewRoom();
+	}
+
+	var dainput1 = $("<input>")
+		.addClass("promptInput")
+		.attr("placeholder", "adjuster")
+		.appendTo(m);
+
+	var dainput2 = $("<input>")
+		.addClass("promptInput")
+		.attr("placeholder", "company")
+		.appendTo(m);
+
+	var dainput3 = $("<input>")
+		.addClass("promptInput")
+		.attr("placeholder", "insured")
+		.appendTo(m);
+
+	var dainput4 = $("<input>")
+		.addClass("promptInput")
+		.attr("placeholder", "claimn")
+		.appendTo(m);
+
+	var dainput5 = $("<input>")
+		.addClass("promptInput")
+		.attr("placeholder", "refn")
+		.appendTo(m);
+
+	$("<div>")
+		.addClass("doneButton")
+		.click(function(){ 
+			doneThisModal(dainput1.val(),dainput2.val(),dainput3.val(),dainput4.val(),dainput5.val());
+		})
+		.html("add")
+		.appendTo(f);
+
+	$("<div>")
+		.addClass("cancelButton")
+		.click(function(){ $("#modal").hide(); })
+		.html("cancel")
+		.appendTo(f);
+
+	$("#modal").show();
+}
+
+function showModalForNewRoom(){
+	var h = $("#modalHeader").html("");
+	var m = $("#modalContent").html("");
+	var f = $("#modalFooter").html("");
+
+	$("<h2>")
+		.html("Adding a New Room to this Claim")
+		.appendTo(h);
+
+	function doneThisModal(name){
+			var c = claimdata.claims[claimdata.selectedClaim];
+			console.log(c);
+			c.rooms.push({});
+			claimdata.selectedRoom = c.rooms.length-1;
+			var r = c.rooms[claimdata.selectedRoom];
+			r["name"] = name;
+
+			saveClaimData();
+			updateRoomlist();
+			updateSidebar();
+			$("#modal").hide();
+	}
+
+	var dainput = $("<input>")
+		.addClass("promptInput")
+		.attr("placeholder", "room description")
+		.keypress(function(e){
+			var key=e.keyCode || e.which;
+			if (key==13){
+				doneThisModal(dainput.val());
+			}
+		})
+		.appendTo(m);
+
+	$("<div>")
+		.addClass("doneButton")
+		.click(function(){ 
+			doneThisModal(dainput.val());
+		})
+		.html("add")
+		.appendTo(f);
+
+	$("<div>")
+		.addClass("cancelButton")
+		.click(function(){ $("#modal").hide(); })
+		.html("cancel")
+		.appendTo(f);
+
+	$("#modal").show();
 }
 
 function showModalForSwitchingClaim(){
@@ -219,9 +365,11 @@ function showModalForSwitchingClaim(){
 		
 		var d = new Date(claimdata.claims[i].date);
 		var s = "";
-		s += "Claim " + (parseInt(i)+1);
+		s += "claim #:" + claimdata.claims[i].claimn + "";
+		s += " by ref#:" + claimdata.claims[i].refn + "<br/>";
+		s += "adjuster:" + claimdata.claims[i].adjuster + " company: " + claimdata.claims[i].company + "<br/>";
 		s += " with " + claimdata.claims[i].rooms.length + " rooms <br/>";
-		s += "created at " + d.toUTCString();
+		// s += "created at " + d.toUTCString();
 		
 
 		$("<div>")
@@ -462,7 +610,12 @@ function saveClaimData(){
 
 function debug(){
 	var u = $("#dataPanel").html("");
-	$("<h3>").html("Claim #<strong>" + (parseInt(claimdata.selectedClaim)+1) + "</strong>").appendTo(u);
+	var c = claimdata.claims[claimdata.selectedClaim];
+	$("<h3>").html("Claim #<strong>" + c.claimn + "</strong>").appendTo(u);
+	$("<h3>").html("Ref #<strong>" + c.refn + "</strong>").appendTo(u);
+	$("<h3>").html("Adjuster: <strong>" + c.adjuster + "</strong>").appendTo(u);
+	$("<h3>").html("Company: <strong>" + c.company + "</strong>").appendTo(u);
+	$("<h3>").html("Insured: <strong>" + c.insured + "</strong>").appendTo(u);
 	//$("<h3>").html(claimdata.claims.length + " claims total").appendTo(u);
 	console.log(claimdata);
 	if (claimdata.selectedClaim){
@@ -499,19 +652,25 @@ $(function(){
 	});
 
 	$("#debugDelete").click(function(){
-		claimdata = {};
-		saveClaimData();
+		if (confirm("delete everything and start over?")){
+			claimdata = {};
+			saveClaimData();
+			showModalForNewClaim();
+		}
 	});
 
 	$("#debugOut").click(function(){
 		debug();
 	});
 
-	$("#newClaim").click(newClaim);
+	$("#newClaim").click(showModalForNewClaim);
 	$("#switchClaim").click(showModalForSwitchingClaim);
-	$("#newRoom").click(newRoom);
+	$("#newRoom").click(showModalForNewRoom);
 	$("#exportData").click(saveToSpreadsheet);
 	$("#exportDataWithPrice").click(saveToSpreadsheetWithPrice);
+
+	$("#modalContent").click(function(e){ e.stopPropagation(); });
+	$("#modal").click(function(){ $(this).hide(); });
 
 	// Selecting item
 	$(document).on("click","#mainContentItems .items a", function(){

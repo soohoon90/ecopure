@@ -285,6 +285,10 @@ body{
   background-color: #eee;
 }
 
+#debugDelete{
+  background-color: #822;
+}
+
 #exportData,
 #exportDataWithPrice{
   background-color: #282;
@@ -501,11 +505,13 @@ body{
 }
 
 #roomList div{
+  text-align: center;
+  font-size: 10px;
   padding: 0.5em;
   background-color: #ddd;
   color: #333;
   margin: 5px;
-  border-radius: 10px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
@@ -515,7 +521,7 @@ body{
 }
 
 .claimButton{
-  font-size: 14px;
+  font-size: 10px;
   padding: 1em;
   background-color: #ddd;
   color: #333;
