@@ -1,11 +1,81 @@
-(function(view) {
+(function() {
 "use strict";
-
 
 var claimdata = {};
 var itemData;
 var localItemData = {};
 var categorizedItems;
+
+
+function saveToSpreadsheet(){
+	saveAs(
+			  new Blob(
+				  [itemsToCSV(false)]
+				, {type: "text/plain;charset=" + document.characterSet}
+			)
+			, "exported.csv"
+		);
+}
+
+function saveToSpreadsheetWithPrice(){
+	saveAs(
+			  new Blob(
+				  [itemsToCSV(true)]
+				, {type: "text/plain;charset=" + document.characterSet}
+			)
+			, "exported.csv"
+		);
+}
+
+
+function saveItemsToCSV(){
+	var rows = [];
+
+	for (var c in itemData){
+		for (var i in itemData[c]){
+			var row = ""
+			row += quoteString(c);
+			row += ','+ quoteString(i);
+			row += ','+ quoteString(itemData[c][i]);
+			rows.push(row);
+		}
+	}
+
+	var itemsDataBlob = rows.join("\r\n");
+
+	saveAs(
+		  new Blob(
+			  [itemsDataBlob]
+			, {type: "text/plain;charset=" + document.characterSet}
+		)
+		, "itemDB_exported.csv"
+	);
+}
+
+function loadItemsFromCSV(){
+
+	// Get a reference to the fileList
+    var files = !!this.files ? this.files : [];
+    console.log(files);
+
+    // If no files were selected, or no FileReader support, return
+    if ( !files.length || !window.FileReader ) return;
+
+       // Create a new instance of the FileReader
+        var reader = new FileReader();
+
+        // Read the local file as a DataURL
+        reader.readAsText( files[0] );
+
+        // When loaded, set image data as background of page
+        reader.onloadend = function(){
+            var csv = this.result;
+            console.log(csv);
+
+
+
+        }
+}
 
 function loadItemData(){
 	itemData = iData;
@@ -160,27 +230,6 @@ function updateSidebar(){
 	}
 }
 
-function saveToSpreadsheet(){
-	saveAs(
-			  new Blob(
-				  [itemsToCSV(false)]
-				, {type: "text/plain;charset=" + document.characterSet}
-			)
-			, "exported.csv"
-		);
-}
-
-function saveToSpreadsheetWithPrice(){
-	saveAs(
-			  new Blob(
-				  [itemsToCSV(true)]
-				, {type: "text/plain;charset=" + document.characterSet}
-			)
-			, "exported.csv"
-		);
-}
-
-
 function quoteString(string){
 	return '"'+string+'"';
 }
@@ -234,7 +283,7 @@ function showModalForNewClaim(){
 		.html("Creating new Claim")
 		.appendTo(h);
 
-	function doneThisModal(adjuster, company, insured, claimn, refn){
+	function doneThisModal(adjuster, company, insured, refn){
 		if (!claimdata.claims) claimdata.claims = [];
 
 		claimdata.claims.push({});
@@ -245,7 +294,6 @@ function showModalForNewClaim(){
 		c.adjuster = adjuster;
 		c.company = company;
 		c.insured = insured;
-		c.claimn = claimn;
 		c.refn = refn;
 		c.date = new Date();
 		c.rooms = [];
@@ -256,30 +304,38 @@ function showModalForNewClaim(){
 		debug();
 
 		$("#modal").hide();
-		showModalForNewRoom();
+		$(".contentView").hide();
+		$("#itemizingView").show();
 	}
+
+	$("<label>").html("Adjuster<br/>").attr("for", "dainput1").appendTo(m);
 
 	var dainput1 = $("<input>")
 		.addClass("promptInput")
+		.attr("id", "dainput1")
 		.attr("placeholder", "adjuster")
 		.appendTo(m);
 
+	$("<label>").html("<br/>Company<br/>").attr("for", "dainput2").appendTo(m);
+
 	var dainput2 = $("<input>")
+		.attr("id", "dainput2")
 		.addClass("promptInput")
 		.attr("placeholder", "company")
 		.appendTo(m);
 
+	$("<label>").html("<br/>Insured<br/>").attr("for", "dainput3").appendTo(m);
+
 	var dainput3 = $("<input>")
+		.attr("id", "dainput3")
 		.addClass("promptInput")
 		.attr("placeholder", "insured")
 		.appendTo(m);
 
-	var dainput4 = $("<input>")
-		.addClass("promptInput")
-		.attr("placeholder", "claimn")
-		.appendTo(m);
+	$("<label>").html("<br/>Ref #<br/>").attr("for", "dainput3").appendTo(m);
 
-	var dainput5 = $("<input>")
+	var dainput4 = $("<input>")
+		.attr("id", "dainput5")
 		.addClass("promptInput")
 		.attr("placeholder", "refn")
 		.appendTo(m);
@@ -287,7 +343,7 @@ function showModalForNewClaim(){
 	$("<div>")
 		.addClass("doneButton")
 		.click(function(){ 
-			doneThisModal(dainput1.val(),dainput2.val(),dainput3.val(),dainput4.val(),dainput5.val());
+			doneThisModal(dainput1.val(),dainput2.val(),dainput3.val(),dainput4.val());
 		})
 		.html("add")
 		.appendTo(f);
@@ -342,6 +398,49 @@ function showModalForNewRoom(){
 		})
 		.html("add")
 		.appendTo(f);
+
+	$("<div>")
+		.addClass("cancelButton")
+		.click(function(){ $("#modal").hide(); })
+		.html("cancel")
+		.appendTo(f);
+
+	$("#modal").show();
+}
+
+function showModalForSelectExistingClaim(){
+	var h = $("#modalHeader").html("");
+	var m = $("#modalContent").html("");
+	var f = $("#modalFooter").html("");
+
+	$("<h2>")
+		.html("Switch claim you are working on:")
+		.appendTo(h);
+
+	for (var i in claimdata.claims){
+		
+		var d = new Date(claimdata.claims[i].date);
+		var s = "";
+		s += "claim #:" + claimdata.claims[i].claimn + "";
+		s += " by ref#:" + claimdata.claims[i].refn + "<br/>";
+		s += "adjuster:" + claimdata.claims[i].adjuster + " company: " + claimdata.claims[i].company + "<br/>";
+		s += " with " + claimdata.claims[i].rooms.length + " rooms <br/>";
+		// s += "created at " + d.toUTCString();
+		
+
+		$("<div>")
+			.addClass("claimButton")
+			.html(s)
+			.data("i", i)
+			.click(function(){
+				claimdata.selectedClaim = $(this).data("i");
+				updateRoomlist();
+				claimdata.selectedRoom = claimdata.claims[claimdata.selectedClaim].rooms.length-1;
+				updateSidebar();
+				$("#modal").hide();
+			})
+			.appendTo(m);
+	}
 
 	$("<div>")
 		.addClass("cancelButton")
@@ -663,14 +762,18 @@ $(function(){
 		debug();
 	});
 
-	$("#newClaim").click(showModalForNewClaim);
+	$("#addNewClaim").click(showModalForNewClaim);
+	$("#selectExistingClaim").click(showModalForSelectExistingClaim);
 	$("#switchClaim").click(showModalForSwitchingClaim);
 	$("#newRoom").click(showModalForNewRoom);
 	$("#exportData").click(saveToSpreadsheet);
 	$("#exportDataWithPrice").click(saveToSpreadsheetWithPrice);
+	$("#exportItems").click(saveItemsToCSV);
 
 	$("#modalContent").click(function(e){ e.stopPropagation(); });
 	$("#modal").click(function(){ $(this).hide(); });
+
+	$("#importItemsFileSelect").on("change", loadItemsFromCSV);
 
 	// Selecting item
 	$(document).on("click","#mainContentItems .items a", function(){
@@ -722,8 +825,8 @@ $(function(){
 	$("#mainSideItems a:first-child").addClass("selected");
 	updateSidebar();
 
-
 	$("#modal").hide();
+	$("#startView").show();
 });
 
-}(self));
+}());

@@ -24,63 +24,83 @@
 	<div id="appWrapper">
 
 		<div id="header">
-			<h1><strong>EcoPure</strong> Insurance Claim Generator</h1>
-<!-- 			<div id="debugDelete" class="ilnbtn">delete</div>
-			<div id="debugOut" class="ilnbtn">out</div> -->
+			<h1><i class="icon-home"></i> <strong>EcoPure</strong> Insurance Claim</h1>
+<!-- 			<div class="controls">
+				<div><i class="icon icon-plus"></i> Manage Items</div>
+				<div><i class="icon icon-plus"></i> Manage Claims</div>
+			</div> -->
 		</div>
 
 		<div id="content">
-			<div id="controlbar">
-				<h2>Control</h2>
-				<div id="dataPanel">
 
-				</div>
-				<div class="controlGroup">
-					<div id="newClaim" class="btn"><i class="icon-2x icon-plus"></i><br/>Create a New Claim</div>
-					<div id="switchClaim" class="btn"><i class="icon-2x icon-refresh"></i><br/>Switch to a different Claim</div>
-					<div id="exportData" class="btn"><i class="icon-2x icon-cloud-download"></i><br/>Export this Claim</div>
-					<div id="exportDataWithPrice" class="btn"><i class="icon-2x icon-cloud-download"></i><br/>Export this Claim w/Prices</div>
-					<div id="debugDelete" class="btn"><i class="icon-2x icon-remove"></i><br/>Delete All Data</div>
-				</div>
-				<div class="controlGroup">
-					<div id="newRoom" class="btn"><i class="icon-2x icon-plus-sign"></i><br/>Add a Room to this Claim</div>
-					<h3>Switch Room</h3>
-					<div id="roomList">
+			<div id="startView" class="contentView">
+				<div class="hero">
+					<i class="icon-check"> </i>Start Itemizing
+					<div id="addNewClaim" class="btn"><i class="icon-plus"> </i>Itemizing for a new Claim</div>
+					<div id="selectExistingClaim" class="btn"><i class="icon-plus"> </i>Itemizing for existing Claim</div>
+					<div id="manageClaims">
+						<i class="icon-cog"> </i>Claim Management
+						<div class="controlGroup">
+							<div id="exportData" class="btn"><i class="icon-2x icon-cloud-download"> </i><br/>Export a Claim</div>
+							<div id="exportDataWithPrice" class="btn"><i class="icon-2x icon-cloud-download"> </i><br/>Export a Claim w/Prices</div>
+							<div id="debugDelete" class="btn"><i class="icon-2x icon-remove"></i><br/>Delete All Data</div>
+						</div>
+					</div>
+					<div id="manageItems">
+						<i class="icon-cog"> </i>Item Management
+						<div class="controlGroup">
+							<div id="importItems">
+								Import Item Database
+								<input type="file" id="importItemsFileSelect" />
+							</div>
+							<div id="exportItems" class="btn"><i class="icon-2x icon-download"></i><br/>Export Item Database</div>
+						</div>
 
 					</div>
 				</div>
-				<!-- <div class="controlGroup"> -->
-					<!-- <div id="exportData" class="btn">Review Claim</div> -->
-					<!-- <div id="deleteData" class="btn">Start Over</div> -->
-				<!-- </div> -->
 			</div>
-		
-			<div id="sidebar">
-				<h2>Item List</h2>
-				<div id="sidebarContent"></div>
-			</div>
-		
-			<div id="main">
-				<h2>Itemizing</h2>
-				<div id="mainSide">
-					<h3>Categories</h3>
-					<div id="mainSideItems">
+
+			<!-- itemizing -->
+			<div id="itemizingView" class="contentView">
+				<div class="controlbar">
+					<h2>Control</h2>
+					<div id="dataPanel">
+
 					</div>
-				</div>
-				<div id="mainContent">
-					<h3>Items</h3>
-					<div id="mainContentItems">
-						<div class="hero">
-							please select a category
+					<div class="controlGroup">
+						<div id="newRoom" class="btn"><i class="icon-2x icon-plus-sign"></i><br/>Add a Room to this Claim</div>
+						<h3>Switch Room</h3>
+						<div id="roomList">
+							
 						</div>
 					</div>
 				</div>
-			</div>		
+				<div id="sidebar">
+
+				</div>
+				<div id="categoryView">
+
+				</div>
+				<div id="itemsView">
+
+				</div>
+			</div>
+			
+			<div id="itemManagementView" class="contentView">
+				<div class="controlbar">
+
+				</div>
+			</div>
+			<div id="claimManagementView" class="contentView">
+			</div>
+
 		</div>
 
 		<div id="footer">
 
 		</div>
 	</div>
+
+<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 </body>
 </html>
