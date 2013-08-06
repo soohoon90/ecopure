@@ -1,0 +1,56 @@
+<html lang="en">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script src="jquery.min.js"></script>
+<script src="app.js"></script>
+<link href="style.css" rel="stylesheet" TYPE="text/css" MEDIA="screen" >
+<body>
+<script>
+$(document).ready(function () { 
+    $('body').on('click', '.upload', function(){
+        // Get the form data. This serializes the entire form. pritty easy huh!
+        var form = new FormData($('#myform')[0]);
+
+        // Make the ajax call
+        $.ajax({
+            url: 'filesave.php',
+            type: 'POST',
+            xhr: function() {
+                var myXhr = $.ajaxSettings.xhr();
+                if(myXhr.upload){
+                    myXhr.upload.addEventListener('progress',progress, false);
+                }
+                return myXhr;
+            },
+            //add beforesend handler to validate or something
+            //beforeSend: functionname,
+            success: function (res) {
+                $('#content_here_please').html(res);
+            },
+            //add error handler for when a error occurs if you want!
+            //error: errorfunction,
+            data: form,
+            // this is the important stuf you need to overide the usual post behavior
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+    });
+}); 
+
+// Yes outside of the .ready space becouse this is a function not an event listner!
+function progress(e){
+    if(e.lengthComputable){
+        //this makes a nice fancy progress bar
+        $('progress').attr({value:e.loaded,max:e.total});
+    }
+}
+</script>
+
+<form enctype="multipart/form-data" id="myform">    
+    <input type="file" name="uploadfile" id="image" />
+    <input type="button" value="Upload file" class="upload" />
+</form>
+
+<progress value="0" max="100"></progress>
+<hr>
+<div id="content_here_please"></div>

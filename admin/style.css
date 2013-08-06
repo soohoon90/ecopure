@@ -1,0 +1,205 @@
+*{
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  border: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body{
+  font-family: "Open Sans", sans-serif;
+  background-color: #333;
+  font-size: 16px;
+  color: #222;
+  overflow: hidden;
+}
+
+button{
+	padding: 0.2em 0.4em;
+	border-radius: 0.5em;
+	border: 1px solid #ddd;
+	color: white;
+	background-color: #999;
+	font-weight: bold;
+}
+
+#topBar{
+	height: 3em;
+	top:0;
+	width: 100%;
+	position: absolute;
+	background-color: #999;
+	color: white;
+	font-weight: bold;
+	box-sizing:border-box;
+}
+
+#header{
+	padding: 1em;
+	position: absolute;
+	width: 60%;
+	left: 0;
+	top: 0;
+	bottom :0;
+	background-color: #59B300;	
+	box-sizing:border-box;
+}
+
+#header h1{
+	font-size: 1em;
+}
+
+#control{
+	position: absolute;
+	width: 40%;
+	right: 0;
+	padding: 0.3em;
+	text-align: right;
+	background-color: #59B300;	
+}
+
+#control div{
+	font-size: 12px;
+	text-align: center;
+	padding: 0.5em;
+	margin: 0.5em;
+	border-radius: 0.5em;
+	border: 1px solid #888;
+	background-color: white;
+	color: #666;
+	display: inline-block;
+	cursor: pointer;
+}
+
+button:hover{
+	background-color: #aaa;
+}
+
+button:active{
+	background-color: #777;
+}
+
+#mainBar{
+	position: absolute;
+	top: 3em;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow: auto;
+}
+
+#appWrapper{
+  overflow: hidden;
+  position: absolute;
+  //top: 5%;
+  //left: 5%;
+  //right: 5%;
+  //bottom: 5%;
+  width: 100%; height: 100%;
+  background-color: white;
+}
+
+#col1{
+	overflow: auto;
+	padding: 1em;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 20%;
+	background-color: #ddd;
+	color: #222;
+	box-sizing:border-box;
+}
+
+#mainBar h2{
+	margin-bottom: 0.5em;
+}
+
+#col1 li{
+	font-size: 12px;
+	list-style: none;
+	display: inline-block;
+	padding: 0.5em;
+	border: 1px solid #888;
+	color: #666;
+	background-color: white;
+	margin: 2px;
+	border-radius: 0.5em;
+}
+
+#col2{
+	overflow: auto;
+	background-color: #eee;
+	padding: 1em;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 20%;
+	right: 20%;
+}
+
+#col3{
+	overflow: auto;
+	padding: 1em;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	width: 20%;
+	background-color: #ddd;
+	color: #222;
+	box-sizing:border-box;
+}
+
+#col3 li{
+	font-size: 12px;
+	list-style: none;
+	padding: 0.5em;
+	border: 1px solid #888;
+	color: #666;
+	background-color: white;
+	margin: 2px;
+	border-radius: 0.5em;
+}
+
+#col1 li.selected{
+	color: blue;
+	background-color: acf;
+	//font-weight: bold;
+}
+
+table{
+border-collapse:collapse;
+width: 100%;
+}
+
+table, th, td{
+	border: 1px solid #ddd;
+}
+
+tr:nth-child(odd):hover { background-color: #ddd; }
+tr:nth-child(even):hover { background-color: #ddd; }
+tr:nth-child(odd)		{ background-color:#eee; }
+tr:nth-child(even)		{ background-color:#fff; }
+
+td{
+	text-align: center;
+	vertical-align: center;
+	padding: 3px;
+}
+
+table input{
+	width: 100%;
+	box-sizing:border-box;
+	background: none;
+	padding: 0.3em;
+	border-radius: 0.5em;
+	border: 1px solid #ddd;
+}
+
+
+

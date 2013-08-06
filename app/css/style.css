@@ -19,7 +19,6 @@ html, body {
 
 @-ms-viewport { width: device-width; }
 
-
 .l10{ position:absolute; left: 0; width: 10%; top: 0; bottom: 0;}
 .l20{ position:absolute; left: 0; width: 20%; top: 0; bottom: 0;}
 .l30{ position:absolute; left: 0; width: 30%; top: 0; bottom: 0;}
@@ -44,6 +43,7 @@ html, body {
 
 
 #modal{
+  display:none;
   background-color: rgba(0,0,0,.5);
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -141,15 +141,15 @@ html, body {
   overflow: hidden;
   position: absolute;
   /*top: 0%; left: 0%; right: 0%; bottom: 0%;*/
-  /*top: 2%; left: 2%; right: 2%; bottom: 2%;*/
+  top: 2%; left: 2%; right: 2%; bottom: 2%;
   border-radius: 15px;
   box-shadow: 0 0 15px rgba(0,0,0,.5); 
-  position:relative;
-  margin: 0 auto;
-  margin-top: -300px;
-  top: 50%;
-  width: 800px;
-  height: 600px;
+/*  position:relative;*/
+/*  margin: 0 auto;*/
+/*  margin-top: -300px;*/
+/*  top: 50%;*/
+/*  width: 1000px;*/
+/*  height: 700px;*/
 }
 
 #header{
@@ -373,6 +373,19 @@ body{
   cursor: pointer;
 }
 
+.smallbtn{
+  font-size: 6px;
+  text-align: center;
+  border-radius: 10px;
+  margin: 7px 4px;
+  padding: 7px 4px;
+  
+  text-shadow: 0 1px 1px rgba(0,0,0,.5);
+  color: white;
+  background-color: #666;
+  cursor: pointer;
+}
+
 .ilnbtn{
   display: inline-block;
   text-align: center;
@@ -389,6 +402,14 @@ body{
 
 .btn:hover{
   background-color: #555;
+}
+
+.well{
+    padding: 1em;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    margin: 0.5em;
+    border-radius: 0.5em;
+    background-color: rgba(0,0,0,0.1);
 }
 
 .controlGroup{
@@ -410,12 +431,10 @@ body{
 }
 
 .hero{
-  font-size: 3em;
+  font-size: 1.5em;
   border-radius: 10px;
   background-color: #eee;
   color: #333;
-  margin: 25px;
-  padding: 20px;
 }
 
 .hero .btn{
@@ -461,12 +480,19 @@ body{
   background: linear-gradient(to bottom, rgba(130,130,130,1) 0%,rgba(96,96,96,1) 100%);
 }
 
-#mainSideItems{
-  padding: 0 2em;
+#categoryView{
+    position: absolute;
+    left: 300px;
+    right: 0;
+    top: 0;
+    height: 20em;
+    padding: 1em 1em;
+    overflow: auto;
+    box-sizing: border-box;
 }
 
-#mainSideItems a{
-  position:relative;
+#categoryView a{
+  position: relative;
   font-weight: 600;
   text-align: center;
   font-size: 14px;
@@ -482,45 +508,40 @@ body{
   border-radius: 1em;
   color: #333;
   box-shadow: 0 0 5px rgba(0,0,0,.5);
-
-/*  text-align: center;
-  cursor: pointer;
-  color: black;
-  display: block;
-  margin: 5px;
-  border-radius: 5px;
-  padding: 5px;
-  background-color: #eee;*/
 }
 
-#mainSideItems a.selected{
+#categoryView a.selected{
   color: orange;
 }
 
-#mainContent{
+#itemsView{
   overflow-x: hidden;
   overflow-y: auto; 
   -ms-overflow-style: -ms-autohiding-scrollbar;
   position: absolute;
-  left: 0;
+  left: 300px;
   right: 0;
-  top: 200px;
+  top: 20em;
   bottom :0;
+  box-sizing: border-box;
+  padding: 1em;
 }
 
-#mainContentItems .items{
-  /*border-radius: 10px;
-  background-color: #eee;
-  margin: 25px; */
+#itemsView .items{
+  border-radius: 10px;
+  text-align: center;
+  background-color: #aaa;
+  margin: 0 auto;
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
   padding: 20px;
   color: #333;
 }
 
-#mainContentItems .items a{
+#itemsView .items a{
 	position:relative;
 	font-weight: 600;
 	//text-align: center;
-	font-size: 16px;
+	font-size: 13px;
 	display: inline-table;
 	margin: 0 0.5em 0.5em 0;
 	width: 10em;
@@ -531,23 +552,24 @@ body{
 	cursor: pointer;
 	border-radius: 1em;
 	vertical-align: middle;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
 
-#mainContentItems .items a:hover{
+#itemsView .items a:hover{
 	background-color: #eee;
 }
 
-#mainContentItems .items a.describeButton{
+#itemsView .items a.describeButton{
   background-color: #9aa;
   color: white;
 }
 
-#mainContentItems .items a.describeButton:hover{
+#itemsView .items a.describeButton:hover{
   background-color: #899;
   color: white;
 }
 
-#mainContentItems .items a p {
+#itemsView .items a p {
   display: table-cell; 
   vertical-align: middle; 
   text-align: center; 
@@ -592,11 +614,26 @@ body{
 }
 
 .claimButton{
-  font-size: 10px;
+	background-color: white;
+	border: 1px solid #666666;
+	color: #666666;
+ 
   padding: 1em;
-  background-color: #ddd;
-  color: #333;
-  margin: 5px;
-  border-radius: 10px;
+  margin: 1em;
+  border-radius: 1em;
   cursor: pointer;
+}
+
+#newClaimName,
+#newClaimAdress{
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.5em;
+    width: 100%;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    border: 1px solid #666;
+}
+
+#startView{
+    display:block;   
 }

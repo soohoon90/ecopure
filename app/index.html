@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="en" manifest="cache.manifest">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="user-scalable=no, initial-scale=1.0">
@@ -32,34 +32,31 @@
 		</div>
 
 		<div id="content">
-
+		
 			<div id="startView" class="contentView">
-				<div class="hero">
-					<i class="icon-check"> </i>Start Itemizing
-					<div id="addNewClaim" class="btn"><i class="icon-plus"> </i>Itemizing for a new Claim</div>
-					<div id="selectExistingClaim" class="btn"><i class="icon-plus"> </i>Itemizing for existing Claim</div>
-					<div id="manageClaims">
-						<i class="icon-cog"> </i>Claim Management
-						<div class="controlGroup">
-							<div id="exportData" class="btn"><i class="icon-2x icon-cloud-download"> </i><br/>Export a Claim</div>
-							<div id="exportDataWithPrice" class="btn"><i class="icon-2x icon-cloud-download"> </i><br/>Export a Claim w/Prices</div>
-							<div id="debugDelete" class="btn"><i class="icon-2x icon-remove"></i><br/>Delete All Data</div>
-						</div>
-					</div>
-					<div id="manageItems">
-						<i class="icon-cog"> </i>Item Management
-						<div class="controlGroup">
-							<div id="importItems">
-								Import Item Database
-								<input type="file" id="importItemsFileSelect" />
+				<div class="hero full">
+					<div id="newClaim" class="l40">
+						<div class="well">
+						<h3><i class="icon-check"> </i>Start Itemizing for a New Claim <br/></h3>
+						<label for="newClaimName">Name: </label><br/>
+							<input id="newClaimName" /><br/>
+						<label for="newClaimAdress">Address: </label><br/>
+							<textarea id="newClaimAdress"> </textarea><br/>
+						<div id="newClaimButton" class="btn">Start</div>
 							</div>
-							<div id="exportItems" class="btn"><i class="icon-2x icon-download"></i><br/>Export Item Database</div>
-						</div>
-
 					</div>
+					
+					<div class="r60">
+						<div class="well">
+							<h3><i class="icon-archive"> </i>Work with a previous Claims</h3>
+                            <div id="debugDelete" class="ilnbtn">Delete All Claim Data</div>
+							<div id="existingClaims"></div>
+						</div>
+					</div>
+				
 				</div>
 			</div>
-
+		
 			<!-- itemizing -->
 			<div id="itemizingView" class="contentView">
 				<div class="controlbar">
@@ -68,6 +65,8 @@
 
 					</div>
 					<div class="controlGroup">
+                        <div id="exportData" class="btn"><i class="icon-2x icon-archive"></i><br/>Export Data</div>
+                        <div id="exportDataWithPrice" class="btn"><i class="icon-2x icon-archive"></i><br/>Export Data w/p</div>
 						<div id="newRoom" class="btn"><i class="icon-2x icon-plus-sign"></i><br/>Add a Room to this Claim</div>
 						<h3>Switch Room</h3>
 						<div id="roomList">
@@ -85,22 +84,11 @@
 
 				</div>
 			</div>
-			
-			<div id="itemManagementView" class="contentView">
-				<div class="controlbar">
-
-				</div>
-			</div>
-			<div id="claimManagementView" class="contentView">
-			</div>
-
 		</div>
 
 		<div id="footer">
 
 		</div>
 	</div>
-
-<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 </body>
 </html>
